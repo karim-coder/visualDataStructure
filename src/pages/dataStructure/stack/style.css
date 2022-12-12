@@ -1,0 +1,83 @@
+.number {
+  width: 100px;
+  height: 25px;
+  /* background: red; */
+  /* position: absolute; */
+  /* animation-name: example; */
+  animation-duration: 1s;
+  /* left: 100px; */
+  /* animation-fill-mode: both; */
+  /* animation-fill-mode: forwards; */
+  margin: 0;
+}
+
+.abc {
+  width: 100px;
+  height: 25px;
+  /* background: red; */
+  /* position: absolute; */
+  animation-name: pop;
+  animation-duration: 1s;
+  /* left: 100px; */
+  animation-fill-mode: both;
+  animation-fill-mode: forwards;
+  margin: 0;
+}
+.stack {
+  position: relative;
+  animation-duration: 1s;
+  /* animation-name: stack; */
+  animation-fill-mode: forwards;
+  transition-timing-function: ease;
+}
+
+@keyframes example {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 100px;
+    /* background-color: blue; */
+  }
+  from {
+    right: 0px;
+  }
+  to {
+    right: 68px;
+    /* background-color: blue; */
+  }
+}
+@keyframes pop {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 58px;
+  }
+  from {
+    left: 0px;
+  }
+  to {
+    left: 308px;
+  }
+}
+
+@keyframes popping {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 35px;
+    /* background-color: blue; */
+  }
+}
+
+@keyframes stack {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 35px;
+    /* background-color: blue; */
+  }
+}

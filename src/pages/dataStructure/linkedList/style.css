@@ -1,0 +1,44 @@
+circle,
+rect,
+line {
+  stroke-width: 10px;
+  stroke-linecap: round;
+  fill: transparent;
+}
+
+.handle {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 40px;
+}
+/* 
+.switch {
+  width: 160px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 50px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.switch[data-isOn="true"] {
+  justify-content: flex-end;
+} */
+
+.box {
+  margin-top: 20;
+  border: 1px solid red;
+  padding: 10;
+  /* width: 20px;
+  height: 20px; */
+  /* border-radius: 20px; */
+  /* border: 3px dotted var(--accent); */
+  /* pointer-events: none; */
+}
+.example {
+  display: flex;
+  align-items: center;
+}
