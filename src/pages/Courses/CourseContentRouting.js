@@ -5,7 +5,6 @@ import Stack from "../dataStructure/stack";
 import Queue from "../dataStructure/queue";
 import LinkedList from "../dataStructure/linkedList";
 import InsertionSort from "../dataStructure/insertionSort";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const CourseContentRouting = () => {
   // let location = useLocation();

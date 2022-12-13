@@ -71,7 +71,7 @@ export const LIGHT = createTheme({
       },
       body1: {
         fontFamily: font,
-        fontSize: 16,
+        fontSize: 17,
         // color: '#666c73',
       },
       body2: {

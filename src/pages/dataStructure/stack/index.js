@@ -16,6 +16,7 @@ import prism from "react-syntax-highlighter/dist/esm/styles/prism/prism";
 
 // import sass from "react-syntax-highlighter/dist/esm/languages/prism/sass";
 import cpp from "react-syntax-highlighter/dist/esm/languages/prism/cpp";
+import { Link } from "react-router-dom";
 
 const Stack = () => {
   const [list, setList] = useState([1, 2, 3, 4, 5]);
@@ -136,11 +137,22 @@ void show()
   };
   return (
     <div style={{ padding: 20 }}>
-      <Typography variant="body1" style={{ fontSize: 30, fontWeight: 700 }}>
+      <Typography
+        variant="body1"
+        style={{
+          fontSize: 30,
+          fontWeight: 700,
+          textAlign: "center",
+          fontFamily: "Open Sans",
+        }}
+      >
         Stack
       </Typography>
 
-      <Typography variant="body1" style={{ fontSize: 18 }}>
+      <Typography
+        variant="body1"
+        style={{ fontSize: 18, fontFamily: "Open Sans", fontWeight: 500 }}
+      >
         Stack is a linear data structure which follows a particular order in
         which the operations are performed. The order may be LIFO(Last In First
         Out) or FILO(First In Last Out). <br />
@@ -442,6 +454,10 @@ void show()
           </Typography>
         </li>
       </ul>
+
+      <Link to={"/quiz"}>
+        <Typography>Give a Test</Typography>
+      </Link>
 
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}

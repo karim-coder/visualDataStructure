@@ -10,6 +10,7 @@ import Courses from "./pages/Courses";
 import Layout from "./components/layout";
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
+const Quiz = lazy(() => import("./pages/Quiz"));
 
 function App() {
   return (
@@ -49,6 +50,15 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <Signup />
+              </Suspense>
+            }
+          />
+          <Route
+            exact
+            path="quiz"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Quiz />
               </Suspense>
             }
           />

@@ -24,6 +24,8 @@ import BlurLinearIcon from "@mui/icons-material/BlurLinear";
 import LensBlurIcon from "@mui/icons-material/LensBlur";
 import AllOutIcon from "@mui/icons-material/AllOut";
 
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     display: "flex",
@@ -112,22 +114,27 @@ const Links = (props) => {
               fontSize: 16,
               borderRadius: 3,
               padding: "10px 10px",
+              justifyContent: "space-between",
             }
           : {
               display: "flex",
               textDecoration: "none",
-              width: "100%",
+              width: "auto",
               color: "black",
               // border: "1px solid #ccc",
               borderRadius: 3,
               padding: "10px 10px",
               fontSize: 16,
               // color: "black",
+              justifyContent: "space-between",
             }
       }
       to={props.link}
     >
-      <Typography>{props.title}</Typography>
+      <Typography style={{ fontFamily: "Martian Mono", fontWeight: 400 }}>
+        {props.title}
+      </Typography>
+      <KeyboardArrowRightIcon />
     </NavLink>
   );
 };
@@ -177,18 +184,16 @@ const Course = () => {
               marginBottom: 20,
               marginLeft: 10,
               color: "black",
+              fontFamily: "Martian Mono",
             }}
           >
             Data Structures
           </Typography>
 
           {/* <Links link="/course/array" title="Array - Data Structure" /> */}
-          <Links link="/course/stack" title="Stack - Data Structure" />
-          <Links link="/course/queue" title="Queue - Data Structure" />
-          <Links
-            link="/course/linked-list"
-            title="Linked-List - Data Structure"
-          />
+          <Links link="/course/stack" title="Stack" />
+          <Links link="/course/queue" title="Queue" />
+          <Links link="/course/linked-list" title="Linked-List" />
           <Links link="/course/insertion-sort" title="Bubble Sort" />
         </div>
       </Grid>
