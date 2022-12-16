@@ -7,6 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 // import Toaster from "../../../components/Toaster";
 
 // import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
 // import atelierDuneLight from "react-syntax-highlighter/dist/esm/styles/hljs/atelierDuneLight";
@@ -17,6 +18,59 @@ import prism from "react-syntax-highlighter/dist/esm/styles/prism/prism";
 // import sass from "react-syntax-highlighter/dist/esm/languages/prism/sass";
 import cpp from "react-syntax-highlighter/dist/esm/languages/prism/cpp";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import TextCode from "../../../components/TextCode";
+
+const questions = [
+  {
+    content: "Process of inserting an element in stack is called ____________",
+    answers: ["Create", "Push", "Evaluation", "Pop"],
+    correctAnswer: "Push",
+  },
+  {
+    content: " Process of removing an element from stack is called __________",
+    answers: ["Create", "Push", "Evaluation", "Pop"],
+    correctAnswer: "Pop",
+  },
+  {
+    content:
+      "In a stack, if a user tries to remove an element from an empty stack it is called _________",
+    answers: [
+      "Underflow",
+      "Empty collection",
+      "Overflow",
+      "Garbage Collection",
+    ],
+    correctAnswer: "Empty collection",
+  },
+  {
+    content:
+      "Pushing an element into stack already having five elements and stack size of 5, then stack becomes ___________",
+    answers: ["Overflow", "Crash", "Underflow", "User flow"],
+    correctAnswer: "Overflow",
+  },
+];
+
+const useStyles = makeStyles(() => ({
+  title: {
+    fontWeight: 600,
+    marginTop: 10,
+    borderBottom: "2px solid black",
+  },
+  content: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#F9F9F9",
+    fontSize: 16,
+    lineHeight: 2.1,
+    // fontFamily: "Inter",
+    fontWeight: 400,
+  },
+  normalText: {
+    fontSize: 16,
+    lineHeight: 2.1,
+  },
+}));
 
 const Stack = () => {
   const [list, setList] = useState([1, 2, 3, 4, 5]);
@@ -107,6 +161,7 @@ void show()
 			printf("%d\\n",inp_array[i]);
 	}
 }`;
+  const classes = useStyles();
   // Toast message
   const [state, setState] = React.useState({
     open: false,
@@ -137,25 +192,48 @@ void show()
   };
   return (
     <div style={{ padding: 20 }}>
-      <Typography
-        variant="body1"
-        style={{
-          fontSize: 30,
-          fontWeight: 700,
-          textAlign: "center",
-          fontFamily: "Open Sans",
-        }}
-      >
-        Stack
-      </Typography>
+      <div style={{ display: "flex" }}>
+        <Typography
+          variant="body1"
+          style={{
+            fontFamily: "Manrope",
+            fontSize: 30,
+            fontWeight: 700,
+            textAlign: "start",
+            borderBottom: "3px solid black",
+            display: "flex",
+          }}
+        >
+          Stack
+        </Typography>
+      </div>
 
       <Typography
         variant="body1"
-        style={{ fontSize: 18, fontFamily: "Open Sans", fontWeight: 500 }}
+        style={{
+          marginTop: 20,
+          fontSize: 16,
+          lineHeight: 2.1,
+          // fontFamily: "Inter",
+          fontWeight: 400,
+        }}
       >
         Stack is a linear data structure which follows a particular order in
-        which the operations are performed. The order may be LIFO(Last In First
-        Out) or FILO(First In Last Out). <br />
+        which the operations are performed.
+        <br />
+        <div style={{ display: "flex" }}>
+          <Typography className={classes.title}>
+            LIFO( Last In First Out ):
+          </Typography>
+        </div>
+        <Typography className={classes.content}>
+          This strategy states that the element that is inserted last will come
+          out first. You can take a pile of plates kept on top of each other as
+          a real-life example. The plate which we put last is on the top and
+          since we remove the plate that is at the top, we can say that the
+          plate that was put last comes out first.
+        </Typography>
+        The order may be LIFO(Last In First Out) or FILO(First In Last Out).
         There are many real-life examples of a stack. Consider an example of
         plates stacked over one another in the canteen. The plate which is at
         the top is the first one to be removed, i.e. the plate which has been
@@ -163,6 +241,94 @@ void show()
         period of time. So, it can be simply seen to follow LIFO(Last In First
         Out)/FILO(First In Last Out) order.
       </Typography>
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title}>
+          Basic Operations on Stack
+        </Typography>
+      </div>
+      <Typography className={classes.normalText}>
+        In order to make manipulations in a stack, there are certain operations
+        provided to us.
+      </Typography>
+
+      <ul>
+        <li>
+          <Typography className={classes.normalText}>
+            push() to insert an element into the stack{" "}
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            pop() to remove an element from the stack{" "}
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            top() Returns the top element of the stack.{" "}
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            isEmpty() returns true if stack is empty else false.
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            size() returns the size of stack.{" "}
+          </Typography>
+        </li>
+      </ul>
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title}>Push:</Typography>
+      </div>
+      <Typography className={classes.content}>
+        Adds an item to the stack. If the stack is full, then it is said to be
+        an Overflow condition.
+      </Typography>
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title}>Algorithm for push:</Typography>
+      </div>
+
+      <TextCode
+        code={`begin
+ if stack is full
+    return
+ endif
+else  
+ increment top
+ stack[top] assign value
+end else
+end procedure`}
+      />
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title}>Pop:</Typography>
+      </div>
+      <Typography className={classes.content}>
+        Removes an item from the stack. The items are popped in the reversed
+        order in which they are pushed. If the stack is empty, then it is said
+        to be an Underflow condition.
+      </Typography>
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title}>Algorithm for pop:</Typography>
+      </div>
+
+      <TextCode
+        code={`begin
+ if stack is empty
+    return
+ endif
+else
+ store value of stack[top]
+ decrement top
+ return value
+end else
+end procedure`}
+      />
+
       <Grid container xl={12} lg={12} md={12} sm={12} xs={12}>
         <Grid
           xl={6.5}
@@ -170,7 +336,7 @@ void show()
           md={12}
           sm={12}
           xs={12}
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 50 }}
         >
           <Grid
             style={{
@@ -387,7 +553,7 @@ void show()
             {/* )} */}
           </div>
         </Grid>
-        <Grid
+        {/* <Grid
           xl={5.5}
           lg={12}
           md={12}
@@ -425,7 +591,7 @@ void show()
               {codeString}
             </SyntaxHighlighter>
           </div>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Typography style={{ marginTop: 100, fontSize: 20, fontWeight: 600 }}>
         Applications of Stack Data Structure
@@ -454,10 +620,17 @@ void show()
           </Typography>
         </li>
       </ul>
-
-      <Link to={"/quiz"}>
-        <Typography>Give a Test</Typography>
-      </Link>
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link
+          to={"/quiz"}
+          style={{ textDecoration: "none" }}
+          state={{ type: "stack" }}
+        >
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
 
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}

@@ -10,8 +10,33 @@ import {
 } from "@mui/material";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { makeStyles } from "@mui/styles";
+import TextCode from "../../../components/TextCode";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles(() => ({
+  title: {
+    fontWeight: 600,
+    marginTop: 10,
+    borderBottom: "2px solid black",
+  },
+  content: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#F9F9F9",
+    fontSize: 16,
+    lineHeight: 2.1,
+    // fontFamily: "Inter",
+    fontWeight: 400,
+  },
+  normalText: {
+    fontSize: 16,
+    lineHeight: 2.1,
+  },
+}));
 
 const InsertionSort = () => {
+  const classes = useStyles();
   const [list, setList] = useState([10, 7, 5, 1, 2, 6, 4, 8, 9, 3]);
   const [sorting, setSorting] = useState(false);
   const [current, setCurrent] = useState(null);
@@ -83,14 +108,11 @@ const InsertionSort = () => {
   return (
     <div style={{ padding: 20 }}>
       <Typography variant="body1" style={{ fontSize: 30, fontWeight: 700 }}>
-        Insertion Sort
+        Bubble Sort
       </Typography>
       <Typography variant="body1">
-        The working procedure of bubble sort is simplest. This article will be
-        very helpful and interesting to students as they might face bubble sort
-        as a question in their examinations. So, it is important to discuss the
-        topic.
-        <br />
+        Bubble sort is a sorting algorithm that compares two adjacent elements
+        and swaps them until they are in the intended order.
         <br />
         Bubble sort works on the repeatedly swapping of adjacent elements until
         they are not in the intended order. It is called bubble sort because the
@@ -104,6 +126,7 @@ const InsertionSort = () => {
         It is not suitable for large data sets. The average and worst-case
         complexity of Bubble sort is O(n2), where n is a number of items.
       </Typography>
+
       {/* <h1>Counter: {counter}</h1> */}
       <Button
         variant="outlined"
@@ -198,6 +221,29 @@ const InsertionSort = () => {
             </motion.div>
           </>
         ))}
+      </Grid>
+
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography className={classes.title}>Algorithm Code:</Typography>
+      </div>
+
+      <TextCode
+        code={`begin BubbleSort(arr)  
+   for all array elements  
+      if arr[i] > arr[i+1]  
+         swap(arr[i], arr[i+1])  
+      end if  
+   end for     
+   return arr     
+end BubbleSort  `}
+      />
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
       </Grid>
     </div>
   );

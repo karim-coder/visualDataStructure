@@ -16,21 +16,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
+import { makeStyles } from "@mui/styles";
+import { Link } from "react-router-dom";
 
-const draw = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: (i) => {
-    const delay = 1 + i * 0.5;
-    return {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-        opacity: { delay, duration: 0.01 },
-      },
-    };
+const useStyles = makeStyles(() => ({
+  title: {
+    fontWeight: 600,
+    marginTop: 10,
+    borderBottom: "2px solid black",
   },
-};
+  content: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#F9F9F9",
+    fontSize: 16,
+    lineHeight: 2.1,
+    // fontFamily: "Inter",
+    fontWeight: 400,
+  },
+  normalText: {
+    fontSize: 16,
+    lineHeight: 2.1,
+  },
+}));
 
 const defaultValue = {
   input: null,
@@ -40,6 +48,7 @@ const defaultValue = {
 };
 
 const Queue = () => {
+  const classes = useStyles();
   const [list, setList] = useState([1, 2, 3, 4, 5]);
   const [inserting, setInserting] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
@@ -61,14 +70,23 @@ const Queue = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <Typography
-        variant="body1"
-        style={{ fontSize: 30, fontWeight: 700, textAlign: "center" }}
-      >
-        Queue
-      </Typography>
+      <div style={{ display: "flex" }}>
+        <Typography
+          variant="body1"
+          style={{
+            fontFamily: "Manrope",
+            fontSize: 30,
+            fontWeight: 700,
+            textAlign: "start",
+            borderBottom: "3px solid black",
+            display: "flex",
+          }}
+        >
+          Queue
+        </Typography>
+      </div>
 
-      <Typography variant="body1" style={{ fontSize: 18, marginTop: 20 }}>
+      <Typography className={classes.normalText}>
         A queue is a linear data structure that stores the elements
         sequentially. It uses the FIFO approach (First In First Out) for
         accessing elements. Queues are typically used to manage threads in
@@ -521,6 +539,14 @@ const Queue = () => {
           <li>One way exits</li>
         </ul>
       </Typography>
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
       {/* </Grid> */}
 
       {/* <Snackbar

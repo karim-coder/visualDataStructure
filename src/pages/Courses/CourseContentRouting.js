@@ -5,6 +5,8 @@ import Stack from "../dataStructure/stack";
 import Queue from "../dataStructure/queue";
 import LinkedList from "../dataStructure/linkedList";
 import InsertionSort from "../dataStructure/insertionSort";
+import Tree from "../dataStructure/tree";
+import Graph from "../dataStructure/graph";
 
 const CourseContentRouting = () => {
   // let location = useLocation();

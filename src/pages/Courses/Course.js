@@ -26,77 +26,7 @@ import AllOutIcon from "@mui/icons-material/AllOut";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const useStyles = makeStyles((theme) => ({
-  adminRoot: {
-    display: "flex",
-    // zoom: '85%',
-  },
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
-    position: "relative",
-    height: "100%",
-    width: "calc(100% - 250px)",
-  },
-  contentDesktop: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
-    position: "relative",
-    height: "100%",
-    width: "calc(100% - 250px)",
-  },
-  background: {
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    position: "fixed",
-    background: theme.palette.background.default,
-  },
-  backgroundColor: {
-    height: "400px",
-    backgroundImage: theme.custom.containerColor,
-    backgroundAttachment: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    position: "absolute",
-  },
-  backgroundImage: {
-    left: "-2px",
-    width: "100%",
-    bottom: "-32px",
-    position: "absolute",
-    height: "auto",
-    transform: "scale(1.1,0.8)",
-    transformOrigin: "bottom",
-  },
-  backgroundImageMobile: {
-    width: "100%",
-    bottom: "-25px",
-    position: "absolute",
-    height: "auto",
-    transformOrigin: "bottom",
-  },
-  textLimit: {
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-  },
-  menuStyle: {
-    color: theme.custom.sideDrawer.menuColor,
-  },
-  drawerPaper: {
-    height: "auto",
-    minHeight: 150,
-    maxHeight: 300,
-    overflowY: "auto",
-  },
-  nested: {
-    paddingLeft: theme.spacing(9),
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 const Links = (props) => {
   return (
@@ -198,7 +128,7 @@ const Course = () => {
         </div>
       </Grid>
 
-      <Grid xl={10} lg={9} md={8} sm={12} xs={12} style={{}}>
+      <Grid xl={10} lg={8.9} md={8} sm={12} xs={12} style={{}}>
         <div
           style={{
             margin: 10,

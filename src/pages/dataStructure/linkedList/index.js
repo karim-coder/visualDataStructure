@@ -16,21 +16,34 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
-
-const draw = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: (i) => {
-    const delay = 1 + i * 0.5;
-    return {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-        opacity: { delay, duration: 0.01 },
-      },
-    };
+import { makeStyles } from "@mui/styles";
+import { Link } from "react-router-dom";
+const useStyles = makeStyles(() => ({
+  title: {
+    fontWeight: 600,
+    marginTop: 10,
+    borderBottom: "1px solid black",
   },
-};
+  title1: {
+    fontWeight: 600,
+    marginTop: 10,
+    borderBottom: "2px solid black",
+    fontSize: 18,
+  },
+  content: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#F9F9F9",
+    fontSize: 16,
+    lineHeight: 2.1,
+    // fontFamily: "Inter",
+    fontWeight: 400,
+  },
+  normalText: {
+    fontSize: 16,
+    lineHeight: 2.1,
+  },
+}));
 
 const defaultValue = {
   input: null,
@@ -40,7 +53,8 @@ const defaultValue = {
 };
 
 const LinkedList = () => {
-  const [list, setList] = useState([1, 2, 3, 4, 5]);
+  const classes = useStyles();
+  const [list, setList] = useState([1, 2, 3, 4]);
   const [inserting, setInserting] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const [pushing, setPushing] = useState(false);
@@ -60,16 +74,56 @@ const LinkedList = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <Typography variant="body1" style={{ fontSize: 30, fontWeight: 700 }}>
-        LinkedList
-      </Typography>
+      <div style={{ display: "flex" }}>
+        <Typography
+          variant="body1"
+          style={{
+            fontFamily: "Manrope",
+            fontSize: 30,
+            fontWeight: 700,
+            textAlign: "start",
+            borderBottom: "3px solid black",
+            display: "flex",
+          }}
+        >
+          Linked List
+        </Typography>
+      </div>
 
-      <Typography variant="body1">
+      <Typography className={classes.normalText}>
         Linked List can be defined as collection of objects called nodes that
         are randomly stored in the memory. A node contains two fields i.e. data
         stored at that particular address and the pointer which contains the
-        address of the next node in the memory. The last node of the list
-        contains pointer to the null.
+        address of the next node in the memory. <br />
+        The last node of the list contains pointer to the null. Like arrays, a
+        Linked List is a linear data structure. Unlike arrays, linked list
+        elements are not stored at a contiguous location; the elements are
+        linked using pointers. They include a series of connected nodes. Here,
+        each node stores the data and the address of the next node.
+      </Typography>
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title1}>
+          Types of Linked Lists:
+        </Typography>
+      </div>
+      <div style={{ display: "flex", marginTop: 10 }}>
+        <Typography className={classes.title}>1. Singly Linked List</Typography>
+      </div>
+      <Typography className={classes.normalText}>
+        In this type of linked list, one can move or traverse the linked list in
+        only one direction. where the next pointer of each node points to other
+        nodes but the next pointer of the last node points to NULL. It is also
+        called “Singly Linked List”.
+        <br />
+        Each element in a linked list is called a node. A single node contains
+        data and a pointer to the next node which helps in maintaining the
+        structure of the list.
+        <br />
+        The first node is called the head; it points to the first node of the
+        list and helps us access every other element in the list. The last node,
+        also sometimes called the tail, points to NULL which helps us in
+        determining when the list ends.
       </Typography>
 
       <Grid container xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -123,7 +177,7 @@ const LinkedList = () => {
               setY(0);
             }}
           >
-            Insert at random location
+            Insert after a record
           </Button>
           <Button
             variant="outlined"
@@ -191,7 +245,7 @@ const LinkedList = () => {
               setY(0);
             }}
           >
-            Delete from specified location
+            Delete specified record
           </Button>
         </Grid>
 
@@ -566,6 +620,9 @@ const LinkedList = () => {
             </motion.div>
           ))}
         </Box>
+        <Grid xs={12}>
+          <Typography style={{ margin: 10, marginLeft: 40 }}>Head</Typography>
+        </Grid>
 
         <Grid
           xl={6}
@@ -580,6 +637,95 @@ const LinkedList = () => {
             borderRadius: 10,
           }}
         ></Grid>
+      </Grid>
+
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography className={classes.title}>2. Doubly linked list</Typography>
+      </div>
+      <Typography className={classes.normalText}>
+        In this type of linked list, one can move or traverse the linked list in
+        only one direction. where the next pointer of each node points to other
+        nodes but the next pointer of the last node points to NULL. It is also
+        called “Singly Linked List”.
+        <br />
+        Each element in a linked list is called a node. A single node contains
+        data and a pointer to the next node which helps in maintaining the
+        structure of the list.
+        <br />
+        The first node is called the head; it points to the first node of the
+        list and helps us access every other element in the list. The last node,
+        also sometimes called the tail, points to NULL which helps us in
+        determining when the list ends.
+      </Typography>
+      <img src="https://static.javatpoint.com/ds/images/doubly-linked-list2.png" />
+
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography className={classes.title}>
+          3. Circular Doubly Linked List
+        </Typography>
+      </div>
+      <Typography className={classes.normalText}>
+        Circular doubly linked list is a more complexed type of data structure
+        in which a node contain pointers to its previous node as well as the
+        next node. Circular doubly linked list doesn't contain NULL in any of
+        the node. The last node of the list contains the address of the first
+        node of the list. The first node of the list also contain address of the
+        last node in its previous pointer.
+        <br />
+        Due to the fact that a circular doubly linked list contains three parts
+        in its structure therefore, it demands more space per node and more
+        expensive basic operations. However, a circular doubly linked list
+        provides easy manipulation of the pointers and the searching becomes
+        twice as efficient.
+        <br />
+        The first node is called the head; it points to the first node of the
+        list and helps us access every other element in the list. The last node,
+        also sometimes called the tail, points to NULL which helps us in
+        determining when the list ends.
+      </Typography>
+      <img src="https://static.javatpoint.com/ds/images/circular-doubly-linked-list.png" />
+
+      <div style={{ display: "flex" }}>
+        <Typography className={classes.title1}>
+          Linked List Applications
+        </Typography>
+      </div>
+      <ul>
+        <li>
+          <Typography className={classes.normalText}>
+            Dynamic memory allocation
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            Implemented in stack and
+            <span>
+              <Link to="/course/queue"> queue </Link>
+            </span>
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            In undo functionality of softwares
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            Hash tables, Graphs
+          </Typography>
+        </li>
+        <li>
+          <Typography className={classes.normalText}>
+            size() returns the size of stack.{" "}
+          </Typography>
+        </li>
+      </ul>
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
       </Grid>
 
       {/* <Snackbar
