@@ -1,0 +1,17 @@
+circle,
+rect,
+line {
+  stroke-width: 5px;
+  /* stroke-linecap: round; */
+  fill: transparent;
+}
+.point {
+  width: 50px;
+  height: 2px;
+  background: black;
+  transition: width 1s ease;
+}
+
+.point:hover {
+  width: 100px;
+}

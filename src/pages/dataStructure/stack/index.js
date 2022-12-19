@@ -172,8 +172,6 @@ void show()
   const { vertical, horizontal, open } = state;
 
   const handleClick = (newState) => () => {
-    console.log("Hi");
-
     setState({ open: true, ...newState });
   };
 

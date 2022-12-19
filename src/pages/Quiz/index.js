@@ -84,8 +84,8 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { data } = location.state;
-  console.log("Type: ", data);
+  // const { type } = location.state;
+  // console.log("Type: ", type);
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
@@ -103,17 +103,6 @@ const Quiz = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log("Value: ", event);
-    // if (value === "best") {
-    //   setHelperText("You got it!");
-    //   setError(false);
-    // } else if (value === "worst") {
-    //   setHelperText("Sorry, wrong answer!");
-    //   setError(true);
-    // } else {
-    //   setHelperText("Please select an option.");
-    //   setError(true);
-    // }
   };
   // console.log("Answers: ", answers);
 
@@ -144,14 +133,14 @@ const Quiz = () => {
               <FormLabel id="demo-error-radios">
                 <span
                   style={{
-                    padding: "2px 7px",
-                    background: "#0039C6",
-                    borderRadius: "50%",
-                    marginRight: 10,
-                    color: "white",
+                    // padding: "2px 7px",
+                    // background: "#0039C6",
+                    // borderRadius: "50%",
+                    marginRight: 5,
+                    color: "#0039C6",
                   }}
                 >
-                  {index + 1}
+                  {index + 1}.
                 </span>
                 {item.content}
               </FormLabel>
@@ -231,18 +220,3 @@ const Quiz = () => {
 };
 
 export default Quiz;
-// box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-
-// box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
-
-{
-  /*
-
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
-box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
-   */
-}

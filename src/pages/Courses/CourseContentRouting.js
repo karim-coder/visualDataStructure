@@ -7,6 +7,7 @@ import LinkedList from "../dataStructure/linkedList";
 import InsertionSort from "../dataStructure/insertionSort";
 import Tree from "../dataStructure/tree";
 import Graph from "../dataStructure/graph";
+import HashTable from "../dataStructure/hashTable";
 
 const CourseContentRouting = () => {
   // let location = useLocation();
@@ -57,6 +58,15 @@ const CourseContentRouting = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <LinkedList />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="hash-table"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <HashTable />
           </Suspense>
         }
       />
