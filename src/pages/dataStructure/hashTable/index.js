@@ -17,7 +17,15 @@ import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import "./style.css";
 import SnackbarMessage from "../../../components/SnackbarMessage";
-const useStyles = makeStyles(() => ({
+import clsx from "clsx";
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+
+import ChipInput from "../../../components/ChipInput";
+import TagsInput from "../../../components/TagsInput";
+
+const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 600,
     marginTop: 10,
@@ -36,6 +44,22 @@ const useStyles = makeStyles(() => ({
     fontSize: 16,
     lineHeight: 2.1,
   },
+  hash: {
+    display: "flex",
+    textAlign: "center",
+    alignItems: "center",
+    marginTop: 10,
+    animation: `$myEffect 1000ms ${theme.transitions.easing.easeInOut}`,
+    transformOrigin: "0",
+  },
+  "@keyframes myEffect": {
+    "0%": {
+      transform: "scale(0)",
+    },
+    "100%": {
+      transform: "scale(1)",
+    },
+  },
 }));
 
 const draw = {
@@ -53,7 +77,7 @@ const draw = {
   },
 };
 
-const Arrow = () => {
+const Arrow = ({ color }) => {
   return (
     <div
       style={{
@@ -66,7 +90,7 @@ const Arrow = () => {
         style={{
           marginTop: 6,
           width: 50,
-          background: "black",
+          background: color,
           height: 2,
           float: "left",
         }}
@@ -77,7 +101,7 @@ const Arrow = () => {
           height: 0,
           borderTop: "6px solid transparent",
           borderBottom: "6px solid transparent",
-          borderLeft: "12px solid black",
+          borderLeft: `12px solid ${color}`,
           float: "right",
         }}
       />
@@ -93,6 +117,10 @@ const data = [
   { 4: [4, 9] },
 ];
 
+const ListItem = styled("li")(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
+
 const HashTable = () => {
   const classes = useStyles();
   const [list, setList] = useState([10, 7, 5, 1, 2, 6, 4, 8, 9, 3]);
@@ -105,7 +133,56 @@ const HashTable = () => {
   const [message, setMessage] = useState(null);
   const [show, setShow] = useState(false);
 
-  console.log("Hash Value: ", hashValue);
+  const [chipData, setChipData] = React.useState([]);
+
+  // console.log("Hash Value: ", chipData);
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let counter = count;
+    const interval = setInterval(() => {
+      if (counter >= chipData.length) {
+        setChipData(null);
+        clearInterval(interval);
+        setInput(null);
+        console.log("Hash Value: ", chipData);
+      } else {
+        setInput(parseInt(chipData[counter]));
+        setCount((counter) => counter + 1);
+        let arr = [...hashValue];
+        let arr1 = [
+          ...arr[parseInt(chipData[counter]) % 5][
+            parseInt(chipData[counter]) % 5
+          ],
+        ];
+        if (!arr1.includes(parseInt(parseInt(chipData[counter])))) {
+          arr1.push(parseInt(parseInt(chipData[counter])));
+          arr[parseInt(chipData[counter]) % 5][
+            parseInt(chipData[counter]) % 5
+          ] = arr1;
+          setHashValue(arr);
+          setShow(true);
+          console.log(counter, "Hi");
+
+          // local variable that this closure will see
+        } else {
+          // setInput(null);
+          setMessage(
+            `${parseInt(chipData[counter])} already exist in hash table.`
+          );
+
+          setShow(false);
+          // setTimeout(() => {
+          //   setInput(null);
+          // }, 1000);
+        }
+        counter++;
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [show, setHashValue]);
   return (
     <div style={{ padding: 20 }}>
       <Typography variant="body1" style={{ fontSize: 30, fontWeight: 700 }}>
@@ -129,42 +206,41 @@ const HashTable = () => {
 
       {/* <h1>Counter: {counter}</h1> */}
 
-      <TextField
-        type="number"
+      {/* <TextField
+        // type="number"
         label="Number"
         size="small"
         style={{ marginTop: 20 }}
         value={input ? input : ""}
         onChange={(e) => {
+          e.target.value = e.target.value.replace(/[A-Za-z!@#$%^&*().]/g, "");
           setInput(e.target.value);
         }}
-      />
+      /> */}
+
+      <Grid sx={{ mt: 3 }}>
+        <TagsInput
+          selectedTags={(chip) => {
+            setChipData(chip);
+          }}
+          value={chipData}
+          fullWidth
+          type="number"
+          variant="outlined"
+          id="tags"
+          name="tags"
+          placeholder="add Tags"
+          label="tags"
+        />
+      </Grid>
+
       <Button
         variant="outlined"
         // startIcon={<AddIcon />}
-        disabled={!input}
+        // disabled={!input}
         style={{ marginLeft: 10, textTransform: "none", marginTop: 20 }}
         onClick={() => {
-          setTest(!test);
-          let arr = [...hashValue];
-          let arr1 = [...arr[input % 5][input % 5]];
-          if (!arr1.includes(parseInt(input))) {
-            setShow(true);
-            arr1.push(parseInt(input));
-            arr[input % 5][input % 5] = arr1;
-            setHashValue(arr);
-            setInput(null);
-            setTimeout(() => {
-              setShow(false);
-            }, 1000);
-          } else {
-            setMessage(`${input} already exist in hash table.`);
-
-            setInput(null);
-            // setTimeout(() => {
-            //   setMessage(null);
-            // }, 3000);
-          }
+          setShow(true);
         }}
       >
         Insert
@@ -185,10 +261,15 @@ const HashTable = () => {
               style={{
                 transition: "all 0s ease-in",
                 width: 60,
-                marginRight: 5,
+                marginTop: 10,
                 position: "relative",
                 padding: "5px 10px",
-                border: "1px solid blue",
+                backgroundColor:
+                  ind === parseInt(input) % 5 ? "green" : "white",
+                color: ind === parseInt(input) % 5 ? "white" : "black",
+                border: `1px solid ${
+                  ind === parseInt(input) % 5 ? "green" : "blue"
+                }`,
                 textAlign: "center",
               }}
             >
@@ -210,6 +291,7 @@ const HashTable = () => {
                 />
               </motion.svg> */}
             </Typography>
+
             <Grid
               container
               xl={12}
@@ -220,33 +302,31 @@ const HashTable = () => {
               style={{ alignItems: "center" }}
             >
               {item[ind]
-                .concat(show && input % 5 === ind ? [0] : [])
-                .map((value, ind) => (
-                  // <div
-                  //   style={{
-                  //     display: "flex",
-                  //     textAlign: "center",
-                  //     alignItems: "center",
-                  //   }}
-                  // >
-                  <>
-                    {/* <Grow in={show}> */}
-                    <Arrow />
+                // .concat(show && input % 5 === ind ? [0] : [])
+                .map((value, index) => (
+                  <div className={classes.hash}>
+                    <Arrow
+                      color={value === parseInt(input) ? "red" : "black"}
+                    />
                     <Typography
+                      className="show"
                       style={{
-                        transition: "all 0s ease-in",
                         width: 60,
-                        marginRight: 5,
                         position: "relative",
                         padding: "5px 10px",
-                        border: "1px solid black",
+                        backgroundColor:
+                          value === parseInt(input) ? "red" : "white",
+                        color: value === parseInt(input) ? "white" : "black",
+                        border: `1px solid ${
+                          value === parseInt(input) ? "red" : "black"
+                        }`,
                         textAlign: "center",
                       }}
                     >
                       {value}
                     </Typography>
-                    {/* </Grow> */}
-                  </>
+                    <div className="graybox"></div>
+                  </div>
                 ))}
             </Grid>
           </div>

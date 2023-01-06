@@ -15,3 +15,27 @@ line {
 .point:hover {
   width: 100px;
 }
+
+.how {
+  height: 2em;
+  margin: 2px 0;
+}
+
+.graybox {
+  /* float: left; */
+  /* background-color: gray;
+  height: 100px;
+  width: 400px;
+  line-height: 100px; */
+  transform-origin: 0;
+  animation: main 0.5s;
+}
+
+@keyframes main {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
