@@ -21,21 +21,19 @@ line {
   margin: 2px 0;
 }
 
-.graybox {
-  /* float: left; */
-  /* background-color: gray;
-  height: 100px;
-  width: 400px;
-  line-height: 100px; */
-  transform-origin: 0;
-  animation: main 0.5s;
+.button {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 100px;
+  height: 30px;
+  display: block;
+
+  background: linear-gradient(to right, black 50%, white 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.5s ease-out;
 }
 
-@keyframes main {
-  0% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(1);
-  }
+.button:hover {
+  background-position: left bottom;
 }

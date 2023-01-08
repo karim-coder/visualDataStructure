@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TagsInput({ ...props }) {
   const classes = useStyles();
-  const { selectedTags, placeholder, tags, ...other } = props;
+  const { selectedTags, placeholder, clear, tags, ...other } = props;
   const [inputValue, setInputValue] = React.useState("");
   const [selectedItem, setSelectedItem] = React.useState([]);
   useEffect(() => {
@@ -23,6 +23,10 @@ export default function TagsInput({ ...props }) {
   useEffect(() => {
     selectedTags(selectedItem);
   }, [selectedItem, selectedTags]);
+
+  useEffect(() => {
+    if (clear) setSelectedItem([]);
+  }, [clear]);
 
   function handleKeyDown(event) {
     if (event.key === "Enter") {

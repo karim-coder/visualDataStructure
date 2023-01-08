@@ -21,29 +21,72 @@ import clsx from "clsx";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ChipInput from "../../../components/ChipInput";
 import TagsInput from "../../../components/TagsInput";
+import Slider from "@mui/material/Slider";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    fontWeight: 600,
-    marginTop: 10,
-    borderBottom: "2px solid black",
-  },
-  content: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: "#F9F9F9",
-    fontSize: 16,
-    lineHeight: 2.1,
-    // fontFamily: "Inter",
-    fontWeight: 400,
-  },
-  normalText: {
-    fontSize: 16,
-    lineHeight: 2.1,
-  },
+import { withStyles } from "@mui/styles";
+
+const useStyles = makeStyles((theme) => {
+  console.log("Hi", (props) => props.speed);
+  return {
+    title: {
+      fontWeight: 600,
+      marginTop: 10,
+      borderBottom: "2px solid black",
+    },
+    content: {
+      marginTop: 10,
+      padding: 10,
+      backgroundColor: "#F9F9F9",
+      fontSize: 16,
+      lineHeight: 2.1,
+      // fontFamily: "Inter",
+      fontWeight: 400,
+    },
+    normalText: {
+      fontSize: 16,
+      lineHeight: 2.1,
+    },
+    // hash: ({ speed }) => ({
+    //   display: "flex",
+    //   textAlign: "center",
+    //   alignItems: "center",
+    //   marginTop: 10,
+    //   animation: `$myEffect 1000ms ${theme.transitions.easing.easeInOut}`,
+    //   transformOrigin: "0",
+    // }),
+    hash: {
+      display: "flex",
+      textAlign: "center",
+      alignItems: "center",
+      marginTop: 10,
+      animation: `$myEffect 1000ms ${theme.transitions.easing.easeInOut}`,
+      transformOrigin: "0",
+    },
+    "@keyframes myEffect": {
+      "0%": {
+        transform: "scale(0)",
+      },
+      "100%": {
+        transform: "scale(1)",
+      },
+    },
+
+    box: {
+      background: `linear-gradient(to right, black 50%, white 50%)`,
+      backgroundSize: "200% 100%",
+    },
+    box1: {
+      background: `linear-gradient(to right, blue 50%, white 50%)`,
+      backgroundSize: "200% 100%",
+    },
+  };
+});
+
+// const Div = styled(div);
+const Div = styled(Box)(({ theme, speed }) => ({
   hash: {
     display: "flex",
     textAlign: "center",
@@ -61,21 +104,32 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const draw = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: (i) => {
-    const delay = 1 + i * 0.5;
-    return {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { delay, type: "spring", duration: 1, bounce: 0 },
-        opacity: { delay, duration: 0.01 },
-      },
-    };
+const marks = [
+  {
+    value: 250,
+    label: "0.25s",
   },
-};
+  {
+    value: 500,
+    label: "0.5s",
+  },
+  {
+    value: 1000,
+    label: "1s",
+  },
+  {
+    value: 1500,
+    label: "1.5s",
+  },
+];
+
+function valuetext(value) {
+  return `${value}°C`;
+}
+
+function valueLabelFormat(value) {
+  return marks.findIndex((mark) => mark.value === value) + 1;
+}
 
 const Arrow = ({ color }) => {
   return (
@@ -122,67 +176,169 @@ const ListItem = styled("li")(({ theme }) => ({
 }));
 
 const HashTable = () => {
-  const classes = useStyles();
-  const [list, setList] = useState([10, 7, 5, 1, 2, 6, 4, 8, 9, 3]);
+  // const classes = useStyles();
+
+  const [speed, setSpeed] = useState(1000);
+  const props = { speed: 1000 };
+  const classes = useStyles(props);
 
   const [hashSize, setHashSize] = useState(5);
   const [input, setInput] = useState(null);
+  const [inHash, setInHash] = useState(null);
   const [hashValue, setHashValue] = useState([...data]);
 
-  const [test, setTest] = useState(false);
   const [message, setMessage] = useState(null);
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [searchValue, setSearchValue] = useState(null);
 
   const [chipData, setChipData] = React.useState([]);
-
+  const [index, setIndex] = useState(null);
+  const [clear, setClear] = useState(false);
+  // const [speed, setSpeed] = useState(1000);
+  // const classes = useStyles({ speed: speed });
   // console.log("Hash Value: ", chipData);
 
   const [count, setCount] = useState(0);
 
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "bottom",
+    horizontal: "center",
+    message: "",
+  });
+  const { vertical, horizontal, open } = state;
+
   useEffect(() => {
-    let counter = count;
-    const interval = setInterval(() => {
-      if (counter >= chipData.length) {
-        setChipData(null);
-        clearInterval(interval);
-        setInput(null);
-        console.log("Hash Value: ", chipData);
-      } else {
-        setInput(parseInt(chipData[counter]));
-        setCount((counter) => counter + 1);
-        let arr = [...hashValue];
-        let arr1 = [
-          ...arr[parseInt(chipData[counter]) % 5][
-            parseInt(chipData[counter]) % 5
-          ],
-        ];
-        if (!arr1.includes(parseInt(parseInt(chipData[counter])))) {
-          arr1.push(parseInt(parseInt(chipData[counter])));
-          arr[parseInt(chipData[counter]) % 5][
-            parseInt(chipData[counter]) % 5
-          ] = arr1;
-          setHashValue(arr);
-          setShow(true);
-          console.log(counter, "Hi");
-
-          // local variable that this closure will see
-        } else {
-          // setInput(null);
-          setMessage(
-            `${parseInt(chipData[counter])} already exist in hash table.`
-          );
-
-          setShow(false);
-          // setTimeout(() => {
-          //   setInput(null);
-          // }, 1000);
+    let arr = [];
+    for (let i = 0; i < hashSize; i++) {
+      arr.push({});
+      arr[i][i] = [];
+      if (!clear) {
+        let a = 0;
+        for (let j = 0; j < Math.floor(Math.random() * hashSize * 5) + 1; j++) {
+          let num = Math.floor(Math.random() * 100) + 1;
+          let res = num % hashSize;
+          if (!arr[i][i].includes(num) && res === i) {
+            arr[i][i][a] = num;
+            a += 1;
+          }
         }
-        counter++;
       }
-    }, 1000);
+      setClear(false);
+    }
+    setHashValue([...arr]);
+    console.log(arr);
+  }, [hashSize]);
 
-    return () => clearInterval(interval);
+  useEffect(() => {
+    if (show && chipData.length > 0) {
+      let counter = count;
+      const interval = setInterval(() => {
+        if (counter >= chipData.length) {
+          setChipData([]);
+          clearInterval(interval);
+          setInput(null);
+          setCount(0);
+          setShow(false);
+        } else {
+          setCount((counter) => counter + 1);
+          let arr = [...hashValue];
+          let arr1 = [
+            ...arr[parseInt(chipData[counter]) % hashSize][
+              parseInt(chipData[counter]) % hashSize
+            ],
+          ];
+          if (!arr1.includes(parseInt(parseInt(chipData[counter])))) {
+            setInput({
+              value: parseInt(chipData[counter]),
+              isInHashTable: false,
+            });
+            arr1.push(parseInt(parseInt(chipData[counter])));
+            arr[parseInt(chipData[counter]) % hashSize][
+              parseInt(chipData[counter]) % hashSize
+            ] = arr1;
+            setHashValue(arr);
+            setShow(true);
+          } else {
+            setInput({
+              value: parseInt(chipData[counter]),
+              isInHashTable: true,
+            });
+            setState({
+              ...state,
+              open: true,
+              message: `${parseInt(
+                chipData[counter]
+              )} already exist in hash table.`,
+            });
+            // setMessage(
+            //   `${parseInt(chipData[counter])} already exist in hash table.`
+            // );
+          }
+          counter++;
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
   }, [show, setHashValue]);
+  // console.log(index);
+  useEffect(() => {
+    if (searching && searchValue) {
+      let counter = count;
+
+      const interval = setInterval(() => {
+        if (
+          counter >=
+          hashValue[searchValue % hashSize][searchValue % hashSize].length
+        ) {
+          // setMessage(`${searchValue} doesn't exist in hash table.`);
+          // setState({
+          //   ...state,
+          //   open: true,
+          //   message: `${searchValue} doesn't exist in hash table.`,
+          // });
+          clearInterval(interval);
+          setCount(0);
+          setSearching(false);
+        } else {
+          setCount((counter) => counter + 1);
+          setIndex(counter + 1);
+          if (
+            hashValue[searchValue % hashSize][searchValue % hashSize][
+              counter
+            ] === searchValue
+          ) {
+            setSearching(false);
+            setSearch(true);
+          }
+          console.log("Hash Value: ", counter);
+          counter++;
+          if (
+            counter >=
+              hashValue[searchValue % hashSize][searchValue % hashSize]
+                .length &&
+            searchValue !==
+              hashValue[searchValue % hashSize][searchValue % hashSize][
+                counter - 1
+              ]
+          ) {
+            setState({
+              ...state,
+              open: true,
+              message: `${searchValue} doesn't exist in hash table.`,
+            });
+          }
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [searching]);
+  console.log("Searching: ", chipData);
+  // console.log("index: ", index);
   return (
     <div style={{ padding: 20 }}>
       <Typography variant="body1" style={{ fontSize: 30, fontWeight: 700 }}>
@@ -218,12 +374,29 @@ const HashTable = () => {
         }}
       /> */}
 
+      <Box sx={{ width: 300 }}>
+        <Slider
+          aria-label="Restricted values"
+          defaultValue={1000}
+          max={1500}
+          valueLabelFormat={valueLabelFormat}
+          getAriaValueText={valuetext}
+          onChange={(e) => {
+            // setSpeed(e.target.value);
+          }}
+          step={null}
+          valueLabelDisplay="auto"
+          marks={marks}
+        />
+      </Box>
+
       <Grid sx={{ mt: 3 }}>
         <TagsInput
           selectedTags={(chip) => {
             setChipData(chip);
           }}
-          value={chipData}
+          // tags={chipData}
+          clear={chipData.length === 0 ? true : false}
           fullWidth
           type="number"
           variant="outlined"
@@ -232,18 +405,87 @@ const HashTable = () => {
           placeholder="add Tags"
           label="tags"
         />
+        {/* <ChipInput
+          InputLabelProps={{
+            shrink: true,
+          }}
+          fullWidth
+          required
+          defaultValue={chipData}
+          value={chipData}
+          onChange={(chip) => {
+            console.log("Chip: ", chip);
+            setChipData(chip);
+          }}
+          allowDuplicates={false}
+          placeholder={"enter number"}
+          label={"Numbers"}
+        /> */}
       </Grid>
 
       <Button
         variant="outlined"
         // startIcon={<AddIcon />}
-        // disabled={!input}
+        disabled={chipData.length === 0 || show}
         style={{ marginLeft: 10, textTransform: "none", marginTop: 20 }}
         onClick={() => {
+          // setIndex(null);
+          setSearchValue(null);
+          // setSearching(false);
           setShow(true);
         }}
       >
         Insert
+      </Button>
+      <TextField
+        size="small"
+        style={{ marginLeft: 10, marginTop: 20 }}
+        value={searchValue === null ? "" : searchValue}
+        type="number"
+        disabled={searching || show}
+        onChange={(e) => {
+          setSearchValue(parseInt(e.target.value));
+          setIndex(null);
+          setCount(0);
+        }}
+      />
+      <Button
+        variant="outlined"
+        // startIcon={<AddIcon />}
+        // disabled={!input}
+        disabled={searching || show || searchValue === null}
+        style={{ marginLeft: 10, textTransform: "none", marginTop: 20 }}
+        onClick={() => {
+          setIndex(0);
+          setCount(0);
+          setSearching(true);
+        }}
+      >
+        Search
+      </Button>
+
+      <TextField
+        size="small"
+        style={{ marginLeft: 10, marginTop: 20 }}
+        value={hashSize}
+        disabled={show}
+        type="number"
+        onChange={(e) => {
+          setHashSize(e.target.value);
+        }}
+      />
+      <Button
+        variant="outlined"
+        // startIcon={<AddIcon />}
+
+        style={{ marginLeft: 10, textTransform: "none", marginTop: 20 }}
+        disabled={show}
+        onClick={() => {
+          setClear(true);
+          setHashSize(hashSize - 1 + 1);
+        }}
+      >
+        Clear
       </Button>
 
       <Grid
@@ -255,26 +497,37 @@ const HashTable = () => {
         xs={12}
         style={{ alignItems: "end", marginTop: 20 }}
       >
-        {hashValue.map((item, ind) => (
-          <div style={{ display: "flex", margin: 10 }}>
-            <Typography
-              style={{
-                transition: "all 0s ease-in",
-                width: 60,
-                marginTop: 10,
-                position: "relative",
-                padding: "5px 10px",
-                backgroundColor:
-                  ind === parseInt(input) % 5 ? "green" : "white",
-                color: ind === parseInt(input) % 5 ? "white" : "black",
-                border: `1px solid ${
-                  ind === parseInt(input) % 5 ? "green" : "blue"
-                }`,
-                textAlign: "center",
-              }}
-            >
-              {ind}
-              {/* <motion.svg
+        {hashValue.length > 0 &&
+          hashValue.map((item, ind) => (
+            <div style={{ display: "flex", margin: 10 }}>
+              <Typography
+                style={{
+                  transition: "all 0s ease-in",
+                  width: 60,
+                  marginTop: 10,
+                  position: "relative",
+                  padding: "5px 10px",
+                  backgroundColor:
+                    (ind === searchValue % hashSize && searching) ||
+                    ind === parseInt(input?.value) % hashSize
+                      ? "green"
+                      : "white",
+                  color:
+                    (ind === searchValue % hashSize && searching) ||
+                    ind === parseInt(input?.value) % hashSize
+                      ? "white"
+                      : "black",
+                  border: `1px solid ${
+                    (ind === searchValue % hashSize && searching) ||
+                    ind === parseInt(input?.value) % hashSize
+                      ? "green"
+                      : "blue"
+                  }`,
+                  textAlign: "center",
+                }}
+              >
+                {ind}
+                {/* <motion.svg
                 // width="600"
                 // viewBox="0 0 600 600"
                 initial="hidden"
@@ -290,47 +543,101 @@ const HashTable = () => {
                   custom={ind}
                 />
               </motion.svg> */}
-            </Typography>
+              </Typography>
 
-            <Grid
-              container
-              xl={12}
-              lg={12}
-              md={12}
-              sm={12}
-              xs={12}
-              style={{ alignItems: "center" }}
-            >
-              {item[ind]
-                // .concat(show && input % 5 === ind ? [0] : [])
-                .map((value, index) => (
-                  <div className={classes.hash}>
-                    <Arrow
-                      color={value === parseInt(input) ? "red" : "black"}
-                    />
-                    <Typography
-                      className="show"
-                      style={{
-                        width: 60,
-                        position: "relative",
-                        padding: "5px 10px",
-                        backgroundColor:
-                          value === parseInt(input) ? "red" : "white",
-                        color: value === parseInt(input) ? "white" : "black",
-                        border: `1px solid ${
-                          value === parseInt(input) ? "red" : "black"
-                        }`,
-                        textAlign: "center",
-                      }}
-                    >
-                      {value}
-                    </Typography>
-                    <div className="graybox"></div>
-                  </div>
-                ))}
-            </Grid>
-          </div>
-        ))}
+              <Grid
+                container
+                xl={12}
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                style={{ alignItems: "center" }}
+              >
+                {item[ind].length > 0 &&
+                  item[ind]
+                    // .concat(show && input? % hashSize === ind ? [0] : [])
+                    .map((value, i) => (
+                      <div className={classes.hash}>
+                        <Arrow
+                          color={
+                            value === parseInt(input?.value) &&
+                            !input.isInHashTable
+                              ? "red"
+                              : // : value === parseInt(input?.value)
+                                // ? "blue"
+                                "black"
+                          }
+                        />
+                        <Typography
+                          className={
+                            searchValue === value
+                              ? classes.box1
+                              : searching && classes.box
+                          }
+                          // color={searchValue === value ? "green" : "black"}
+                          style={{
+                            width: 60,
+                            position: "relative",
+                            padding: "5px 10px",
+                            backgroundColor:
+                              value === parseInt(input?.value) &&
+                              !input.isInHashTable
+                                ? "red"
+                                : value === parseInt(input?.value)
+                                ? "blue"
+                                : "white",
+                            color:
+                              (searching &&
+                                i <= index &&
+                                ind === searchValue % hashSize) ||
+                              value === parseInt(input?.value)
+                                ? "white"
+                                : "black",
+                            border: `1px solid ${
+                              searchValue === value && i <= index
+                                ? "green"
+                                : value === parseInt(input?.value) &&
+                                  !input.isInHashTable
+                                ? "red"
+                                : "black"
+                            }`,
+                            textAlign: "center",
+                            // background:
+                            //   "linear-gradient(to right, black 50%, white 50%)",
+                            backgroundPosition:
+                              searching &&
+                              i <= index &&
+                              ind === searchValue % hashSize
+                                ? "left bottom"
+                                : "right bottom",
+                            // backgroundSize: "200% 100%",
+                            transition: `all ${1000 / 1000}s ease-out`,
+                          }}
+                        >
+                          {value}
+                          {searchValue === value &&
+                            i <= index &&
+                            index !== null && (
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  width: 50,
+                                  height: 50,
+                                  // border: "1px solid blue",
+                                  right: 5,
+                                  top: -10,
+                                }}
+                              >
+                                <TaskAltIcon style={{ color: "green" }} />
+                              </div>
+                            )}
+                        </Typography>
+                      </div>
+                    ))}
+              </Grid>
+            </div>
+          ))}
       </Grid>
 
       <div style={{ display: "flex", marginTop: 20 }}>
@@ -355,7 +662,14 @@ end BubbleSort  `}
           </Button>
         </Link>
       </Grid>
-      {message != null && <SnackbarMessage message={message} open={true} />}
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={() => setState({ ...state, open: false })}
+        message={state.message}
+        key={vertical + horizontal}
+      />
+      {/* {message != null && <SnackbarMessage message={message} open={true} />} */}
     </div>
   );
 };
