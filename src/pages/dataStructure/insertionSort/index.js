@@ -54,52 +54,71 @@ const InsertionSort = () => {
   //     clearInterval(interval);
   //   };
   // }, []);
-
+  const [count, setCount] = useState(0);
   useEffect(() => {
-    // setCurrent([list[index]]);
-    // setNext(list[index + 1]);
     if (index < list.length - 1) {
       setCurrent(null);
       setNext(null);
     }
-    if (index != null && index < list.length - 1) {
-      if (list[index] > list[index + 1]) {
-        // setSorting(true);
-
-        setTimeout(() => {
+    let counter = count;
+    const interval = setInterval(() => {
+      if (index != null && index < list.length - 1) {
+        setCount((counter) => counter + 1);
+        if (list[index] > list[index + 1]) {
+          // setTimeout(() => {
           setCurrent(list[index]);
           setNext(list[index + 1]);
-        }, 700);
+          // }, 450);
 
-        // let arr = [...list];
-        // arr[index] = list[index + 1];
-        // arr[index + 1] = list[index];
-        // setList(arr);
-
-        setTimeout(() => {
-          // console.log("Okay :", length, index, list.length);
-
-          let arr = [...list];
-          arr[index] = list[index + 1];
-          arr[index + 1] = list[index];
-          setList(arr);
-          if (index + length === list.length - 2) {
-            setLength(length + 1);
-            setIndex(0);
-            // setCurrent(null);
-            // setNext(null);
-          } else setIndex(index + 1);
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          setIndex(index + 1);
-          // setSorting(false);
-          // setNext(index + 2);
-          // setCurrent(index + 1);
-        }, 1000);
+          setTimeout(() => {
+            let arr = [...list];
+            arr[index] = list[index + 1];
+            arr[index + 1] = list[index];
+            setList(arr);
+            if (index + length === list.length - 2) {
+              setLength(length + 1);
+              setIndex(0);
+            } else setIndex(index + 1);
+          }, 300);
+        } else {
+          setTimeout(() => {
+            setIndex(index + 1);
+          }, 300);
+        }
+        counter++;
       }
-    }
+    }, 500);
+    return () => clearInterval(interval);
   }, [index]);
+  // useEffect(() => {
+  //   if (index < list.length - 1) {
+  //     setCurrent(null);
+  //     setNext(null);
+  //   }
+  //   if (index != null && index < list.length - 1) {
+  //     if (list[index] > list[index + 1]) {
+  //       setTimeout(() => {
+  //         setCurrent(list[index]);
+  //         setNext(list[index + 1]);
+  //       }, 700);
+
+  //       setTimeout(() => {
+  //         let arr = [...list];
+  //         arr[index] = list[index + 1];
+  //         arr[index + 1] = list[index];
+  //         setList(arr);
+  //         if (index + length === list.length - 2) {
+  //           setLength(length + 1);
+  //           setIndex(0);
+  //         } else setIndex(index + 1);
+  //       }, 1000);
+  //     } else {
+  //       setTimeout(() => {
+  //         setIndex(index + 1);
+  //       }, 1000);
+  //     }
+  //   }
+  // }, [index]);
 
   console.log("Index:", length);
   console.log("List:", list);
@@ -166,7 +185,7 @@ const InsertionSort = () => {
                 //       x: -35,
                 //     }
                 //   : {}
-                current == item && index + 1 === ind
+                current == item && index === ind && current < next
                   ? {
                       x: 35,
                     }
@@ -189,7 +208,7 @@ const InsertionSort = () => {
               transition={{
                 // opacity: { ease: "easeOut" },
                 // layout: { duration: 1 },
-                duration: 1,
+                duration: 0.5,
                 ease: "easeOut",
                 // delay: parseInt(ind / 2),
               }}
@@ -239,7 +258,11 @@ end BubbleSort  `}
       />
 
       <Grid sx={12} style={{ textAlign: "center" }}>
-        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "bubbleSort" }}
+          style={{ textDecoration: "none" }}
+        >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>
             Give a Test
           </Button>

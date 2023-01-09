@@ -10,7 +10,9 @@ import Courses from "./pages/Courses";
 import Layout from "./components/layout";
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
+const Profile = lazy(() => import("./pages/Profile"));
 const Quiz = lazy(() => import("./pages/Quiz"));
+const MyTests = lazy(() => import("./pages/MyTests"));
 
 function App() {
   return (
@@ -55,10 +57,28 @@ function App() {
           />
           <Route
             exact
-            path="quiz"
+            path="/profile"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Profile />
+              </Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/quiz"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <Quiz />
+              </Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/my-tests"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <MyTests />
               </Suspense>
             }
           />

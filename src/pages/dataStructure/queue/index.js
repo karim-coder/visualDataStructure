@@ -541,7 +541,11 @@ const Queue = () => {
       </Typography>
 
       <Grid sx={12} style={{ textAlign: "center" }}>
-        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "queue" }}
+          style={{ textDecoration: "none" }}
+        >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>
             Give a Test
           </Button>

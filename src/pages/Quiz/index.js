@@ -9,9 +9,13 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import APIRequest from "../../utils/APIRequest";
+import ConfigAPIURL from "../../config/ConfigAPIURL";
+import isEmpty from "../../utils/isEmpty";
 
-import { useLocation } from "react-router-dom";
 const questions = [
   {
     content: "Process of inserting an element in stack is called ____________",
@@ -78,14 +82,29 @@ const questions = [
     ],
     correctAnswer: "ziuqskeeg",
   },
+  {
+    content:
+      "The data structure required to check whether an expression contains balanced parenthesis is?",
+    answers: ["Stack", "Queue", "Array", "Tree"],
+    correctAnswer: "Stack",
+  },
+  {
+    content:
+      "The process of accessing data stored in a serial access memory is similar to manipulating data on a ------?",
+    answers: ["Heap", "Binary Tree", "Array", "Stack"],
+    correctAnswer: "Stack",
+  },
 ];
 
 const Quiz = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let location = useLocation();
 
-  const location = useLocation();
-  // const { type } = location.state;
-  // console.log("Type: ", type);
+  const user = useSelector((store) => store.user);
+
+  const { type } = location.state;
+  console.log("Type: ", type);
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
@@ -94,6 +113,30 @@ const Quiz = () => {
   );
   const [mark, setMark] = React.useState(null);
   const [showMark, setShowMark] = React.useState(false);
+
+  const SubmitQuiz = (marksObtained) => {
+    APIRequest.request(
+      "POST",
+      ConfigAPIURL.createTest,
+      JSON.stringify({
+        category: type,
+        marksObtained: marksObtained,
+        totalMark: questions.length,
+      })
+    ).then((res) => {
+      if (!isEmpty(res)) {
+        if (res.code === 100) {
+          if (res.data.responseCode === 109) {
+            // if (location.state === "quiz") {
+            // navigate(-1);
+            // } else {
+            navigate("/my-tests");
+            // }
+          }
+        }
+      }
+    });
+  };
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
@@ -105,6 +148,11 @@ const Quiz = () => {
     event.preventDefault();
   };
   // console.log("Answers: ", answers);
+
+  if (isEmpty(user)) {
+    return <Navigate to="/login" state={"quiz"} />;
+    // return <></>;
+  }
 
   return (
     <Container maxWidth="lg" style={{ marginTop: 20, paddingBottom: 20 }}>
@@ -188,7 +236,7 @@ const Quiz = () => {
                   break;
                 }
               }
-              console.log("Hi", a);
+
               if (!a) {
                 let totalMark = 0;
                 questions.map((item, index) => {
@@ -199,6 +247,7 @@ const Quiz = () => {
                 console.log("Total Mark: ", totalMark);
                 setMark(totalMark);
                 setShowMark(true);
+                SubmitQuiz(totalMark);
               } else {
                 setError(true);
               }
@@ -219,4 +268,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default connect()(Quiz);

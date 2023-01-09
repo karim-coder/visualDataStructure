@@ -1,15 +1,71 @@
 import React, { useState } from "react";
 import { Button, Grid, OutlinedInput, Paper, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import APIRequest from "../../utils/APIRequest";
+import ConfigAPIURL from "../../config/ConfigAPIURL";
+import isEmpty from "../../utils/isEmpty";
+import FormValidation from "../../utils/FormValidation";
+import { connect, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultForm = {
-  mobileNo: "",
+  email: "",
   password: "",
 };
 
-const Login = () => {
+const Login = (props) => {
   const [form, setForm] = useState(defaultForm);
+  let navigate = useNavigate();
+  let location = useLocation();
+
+  console.log("Location", location);
+
+  const dispatch = useDispatch();
+
+  const notify = () => toast("Wow so easy !");
+
+  const sendToServer = () => {
+    const fieldValidation = ["email", "password"];
+
+    FormValidation.validation(fieldValidation, form).then((validation) => {
+      if (validation === true) {
+        login();
+      }
+    });
+  };
+
+  const login = () => {
+    APIRequest.request("POST", ConfigAPIURL.login, JSON.stringify(form)).then(
+      (res) => {
+        if (!isEmpty(res)) {
+          if (res.code === 100) {
+            if (res.data.responseCode === 109) {
+              dispatch({
+                type: "UPDATE_USER",
+                value: res.data.user,
+              });
+              if (location.state === "quiz") {
+                navigate(-1);
+              } else {
+                navigate("/");
+              }
+            }
+            if (res.data.responseCode === 103) {
+              setForm(defaultForm);
+              // SnackbarUtils.error(
+              //   props.t("forms.wrongMobileNo"),
+              //   "bottomCenter",
+              //   3000
+              // ).then((notification) => props.publishNotification(notification));
+            }
+          }
+        }
+      }
+    );
+  };
+
   return (
     <Container maxWidth="xs">
       <Paper
@@ -28,38 +84,14 @@ const Login = () => {
         >
           <Grid item xs={10}>
             <TextField
-              id="mobileNo"
-              type={"number"}
-              // step={"1"}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input[type=number]::-webkit-outer-spin-button": {
-                  WebkitAppearance: "none",
-                  margin: 0,
-                },
-                "& input[type=number]::-webkit-inner-spin-button": {
-                  WebkitAppearance: "none",
-                  margin: 0,
-                },
-              }}
-              label={"Mobile No"}
+              id="email"
+              label="Email"
               required
-              // placeholder="Enter your mobile number."
-              value={form.mobileNo}
-              onKeyPress={(event) => {
-                return event.charCode >= 48 && event.charCode <= 57
-                  ? event
-                  : event.preventDefault();
-              }}
+              value={form.email}
               onChange={(e) => {
-                e.target.value = Math.max(0, parseInt(e.target.value))
-                  .toString()
-                  .slice(0, 10);
                 setForm({
                   ...form,
-                  mobileNo: e.target.value,
+                  email: e.target.value,
                 });
               }}
               fullWidth
@@ -84,9 +116,20 @@ const Login = () => {
             />
           </Grid>
 
-          <Button variant="contained" style={{ marginTop: 20 }}>
+          <Button
+            variant="contained"
+            style={{ marginTop: 20 }}
+            onClick={sendToServer}
+          >
             Login
           </Button>
+
+          <div>
+            <button onClick={notify} style={{ display: "none" }}>
+              Notify!
+            </button>
+            <ToastContainer />
+          </div>
 
           <Grid
             container
@@ -139,4 +182,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect()(Login);

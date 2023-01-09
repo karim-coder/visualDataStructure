@@ -1,18 +1,69 @@
 import React, { useState } from "react";
 import { Button, Grid, OutlinedInput, Paper, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import APIRequest from "../../utils/APIRequest";
+import ConfigAPIURL from "../../config/ConfigAPIURL";
+import isEmpty from "../../utils/isEmpty";
+import FormValidation from "../../utils/FormValidation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultForm = {
   fname: "",
   lname: "",
-  mobileNo: "",
+  // mobileNo: "",
   email: "",
   password: "",
 };
 
 const Signup = () => {
   const [form, setForm] = useState(defaultForm);
+
+  let navigate = useNavigate();
+
+  const notify = () => toast("Wow so easy !");
+
+  const SignUp = () => {
+    console.log(JSON.stringify(form));
+    APIRequest.request("POST", ConfigAPIURL.signUp, JSON.stringify(form)).then(
+      (res) => {
+        if (!isEmpty(res)) {
+          console.log(res);
+          if (res.code === 100) {
+            if (res.data.responseCode === 109) {
+              navigate("/login", { replace: true });
+              // SnackbarUtils.success(
+              //   "Your account created successfully!",
+              //   "bottomCenter",
+              //   3000
+              // ).then((notification) => props.publishNotification(notification));
+            }
+            if (res.data.responseCode === 114) {
+              // SnackbarUtils.warn(
+              //   "You are already registered. Please log in.",
+              //   "bottomCenter",
+              //   3000
+              // ).then((notification) => props.publishNotification(notification));
+              setForm(form);
+            }
+          }
+        }
+      }
+    );
+  };
+
+  const sendToServer = () => {
+    const fieldValidation = ["fname", "lname", "email", "password"];
+
+    FormValidation.validation(fieldValidation, form).then((validation) => {
+      if (validation === true) {
+        console.log("Okay");
+        SignUp();
+      }
+    });
+  };
   return (
     <Container maxWidth="xs">
       <Paper
@@ -60,7 +111,7 @@ const Signup = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextField
               id="mobileNo"
               type={"number"}
@@ -98,11 +149,12 @@ const Signup = () => {
               }}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <TextField
               id="email"
               label="Email"
+              required
               value={form.email}
               onChange={(e) => {
                 setForm({
@@ -119,7 +171,7 @@ const Signup = () => {
               type={"password"}
               // step={"1"}
               required
-              label={"password"}
+              label={"Password"}
               // placeholder="Enter your password."
               value={form.password}
               onChange={(e) => {
@@ -132,9 +184,20 @@ const Signup = () => {
             />
           </Grid>
 
-          <Button variant="contained" style={{ marginTop: 20 }}>
+          <Button
+            variant="contained"
+            style={{ marginTop: 20 }}
+            onClick={sendToServer}
+          >
             Sign Up
           </Button>
+
+          <div>
+            <button onClick={notify} style={{ display: "none" }}>
+              Notify!
+            </button>
+            <ToastContainer />
+          </div>
 
           <Grid
             container

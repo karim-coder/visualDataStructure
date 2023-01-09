@@ -374,7 +374,7 @@ const HashTable = () => {
         }}
       /> */}
 
-      <Box sx={{ width: 300 }}>
+      {/* <Box sx={{ width: 300 }}>
         <Slider
           aria-label="Restricted values"
           defaultValue={1000}
@@ -388,7 +388,7 @@ const HashTable = () => {
           valueLabelDisplay="auto"
           marks={marks}
         />
-      </Box>
+      </Box> */}
 
       <Grid sx={{ mt: 3 }}>
         <TagsInput
@@ -645,18 +645,20 @@ const HashTable = () => {
       </div>
 
       <TextCode
-        code={`begin BubbleSort(arr)  
-   for all array elements  
-      if arr[i] > arr[i+1]  
-         swap(arr[i], arr[i+1])  
-      end if  
-   end for     
-   return arr     
-end BubbleSort  `}
+        code={`Chained-Hash-Insert(T, k)
+        insert x at the head of linked list T[h(k)]
+      
+Chained-Hash-Search(T, k)
+        search for an element with key k in linked list T[h(k)]
+       `}
       />
 
       <Grid sx={12} style={{ textAlign: "center" }}>
-        <Link to={"/quiz"} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "hashTable" }}
+          style={{ textDecoration: "none" }}
+        >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>
             Give a Test
           </Button>
