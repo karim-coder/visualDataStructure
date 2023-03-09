@@ -124,7 +124,7 @@ const Dashboard = () => {
             position: "relative",
             cursor: "pointer",
           }}
-          onClick={() => navigate("/course/insertion-sort")}
+          onClick={() => navigate("/course/bubble-sort")}
         >
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ZVWAYsodR6004qxVM8Wl3ESZIrfR-W_xhQ&usqp=CAU"

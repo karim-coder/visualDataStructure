@@ -4,10 +4,12 @@ import Array from "../dataStructure/array";
 import Stack from "../dataStructure/stack";
 import Queue from "../dataStructure/queue";
 import LinkedList from "../dataStructure/linkedList";
-import InsertionSort from "../dataStructure/insertionSort";
+import BubbleSort from "../dataStructure/bubbleSort";
 import Tree from "../dataStructure/tree";
 import Graph from "../dataStructure/graph";
 import HashTable from "../dataStructure/hashTable";
+import InsertionSort from "../dataStructure/insertionSort";
+import SelectionSort from "../dataStructure/selectionSort";
 
 const CourseContentRouting = () => {
   // let location = useLocation();
@@ -72,10 +74,28 @@ const CourseContentRouting = () => {
       />
       <Route
         exact
+        path="bubble-sort"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <BubbleSort />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
         path="insertion-sort"
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <InsertionSort />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="selection-sort"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <SelectionSort />
           </Suspense>
         }
       />

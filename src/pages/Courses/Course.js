@@ -125,7 +125,9 @@ const Course = () => {
           <Links link="/course/queue" title="Queue" />
           <Links link="/course/linked-list" title="Linked-List" />
           <Links link="/course/hash-table" title="Hash Table" />
-          <Links link="/course/insertion-sort" title="Bubble Sort" />
+          <Links link="/course/bubble-sort" title="Bubble Sort" />
+          <Links link="/course/insertion-sort" title="Insertion Sort" />
+          <Links link="/course/selection-sort" title="Selection Sort" />
         </div>
       </Grid>
 

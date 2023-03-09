@@ -9,6 +9,7 @@ import FormValidation from "../../utils/FormValidation";
 import { connect, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Snackbar from "@mui/material/Snackbar";
 
 const defaultForm = {
   email: "",
@@ -25,6 +26,21 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const notify = () => toast("Wow so easy !");
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+    message: "",
+  });
+  const { vertical, horizontal, open } = state;
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   const sendToServer = () => {
     const fieldValidation = ["email", "password"];
@@ -52,8 +68,18 @@ const Login = (props) => {
                 navigate("/");
               }
             }
-            if (res.data.responseCode === 103) {
+            if (res.data.responseCode === 118) {
               setForm(defaultForm);
+              setState({
+                ...state,
+                open: true,
+                message: "Invalid email or password",
+              });
+              // handleClick({
+              //   vertical: "top",
+              //   horizontal: "center",
+              //   message: "Invalid email or password",
+              // });
               // SnackbarUtils.error(
               //   props.t("forms.wrongMobileNo"),
               //   "bottomCenter",
@@ -178,6 +204,13 @@ const Login = (props) => {
           </Grid>
         </Grid>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        message={state.message}
+        key={vertical + horizontal}
+      />
     </Container>
   );
 };

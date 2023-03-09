@@ -9,6 +9,7 @@ import isEmpty from "../../utils/isEmpty";
 import FormValidation from "../../utils/FormValidation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Snackbar from "@mui/material/Snackbar";
 
 const defaultForm = {
   fname: "",
@@ -24,6 +25,21 @@ const Signup = () => {
   let navigate = useNavigate();
 
   const notify = () => toast("Wow so easy !");
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+    message: "",
+  });
+  const { vertical, horizontal, open } = state;
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   const SignUp = () => {
     console.log(JSON.stringify(form));
@@ -46,7 +62,12 @@ const Signup = () => {
               //   "bottomCenter",
               //   3000
               // ).then((notification) => props.publishNotification(notification));
-              setForm(form);
+              setState({
+                ...state,
+                open: true,
+                message: "Already one account  exist with this email id",
+              });
+              setForm(defaultForm);
             }
           }
         }
@@ -247,6 +268,13 @@ const Signup = () => {
           </Grid>
         </Grid>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        message={state.message}
+        key={vertical + horizontal}
+      />
     </Container>
   );
 };

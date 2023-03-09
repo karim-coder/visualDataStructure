@@ -29,9 +29,9 @@ function valueLabelFormat(value) {
   return marks.findIndex((mark) => mark.value === value) + 1;
 }
 
-const InsertionSort = () => {
+const SelectionSort = () => {
   const [array, setArray] = useState([]);
-  const [animationSpeed, setAnimationSpeed] = useState(300);
+  const [animationSpeed, setAnimationSpeed] = useState(1000);
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
 
@@ -50,12 +50,12 @@ const InsertionSort = () => {
   const insertionSort = async () => {
     for (let i = 1; i < array.length; i++) {
       let currentVal = array[i];
-      setIndex1(i);
+
       let j;
       for (j = i - 1; j >= 0 && array[j] > currentVal; j--) {
         console.log(animationSpeed);
         array[j + 1] = array[j];
-        setIndex(j + 1);
+
         await new Promise((resolve) => setTimeout(resolve, animationSpeed));
         array[j] = [currentVal];
         setArray([...array]);
@@ -66,24 +66,67 @@ const InsertionSort = () => {
       setArray([...array]);
     }
   };
-  // let animationName = `animation${Math.round(Math.random() * 100)}`;
-  // let left = `
-  //   @-webkit-keyframes ${animationName} {
-  //       10% {-webkit-transform:translate(${Math.random() * 300}px, ${
-  //   Math.random() * 300
-  // }px)}
-  //       90% {-webkit-transform:translate(${Math.random() * 300}px, ${
-  //   Math.random() * 300
-  // }px)}
-  //       100% {-webkit-transform:translate(${Math.random() * 300}px, ${
-  //   Math.random() * 300
-  // }px)}
-  //   }`;
+
+  const selectionSort = async () => {
+    for (let i = 0; i < array.length - 1; i++) {
+      let minIdx = i;
+      setIndex1(i);
+
+      for (let j = i + 1; j < array.length; j++) {
+        // await new Promise((resolve) => setTimeout(resolve, animationSpeed));
+        //  setIndex(j);
+        if (array[j] < array[minIdx]) {
+          setIndex(j);
+          minIdx = j;
+        }
+      }
+      let temp = array[i];
+      array[i] = array[minIdx];
+      array[minIdx] = temp;
+      await new Promise((resolve) => setTimeout(resolve, animationSpeed));
+      setArray([...array]);
+    }
+  };
+  let styleSheet = document.styleSheets[0];
+  let keyframes = `
+    @-webkit-keyframes left1 {
+     
+        0% {
+          left: 0px;
+          top: 0px;
+        }
+        100% {
+          left: 35px;
+          top: 0px;
+        }
+      
+     
+    }
+    
+  `;
+
+  styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+  let right1 = `
+    @-webkit-keyframes right1 {
+
+        0% {
+          /* background: red; */
+          right: 0px;
+          top: 0px;
+        }
+        100% {
+          /* background: yellow; */
+          right:  ${(index - index1) * 35}px;
+          top: 0px;
+        }
+
+    }`;
+  styleSheet.insertRule(right1, styleSheet.cssRules.length);
 
   return (
     <div>
       <header>
-        <h1>Insertion Sort Animation</h1>
+        <h1>Selection Sort </h1>
       </header>
 
       <div className="array-container">
@@ -95,13 +138,13 @@ const InsertionSort = () => {
               style={{
                 height: `${value}px`,
                 backgroundColor:
-                  idx === index ? "red" : idx <= index1 ? "green" : "black",
+                  idx === index ? "red" : idx < index1 ? "green" : "black",
                 // animationName: idx === index ? "left" : "",
                 animation:
                   idx === index
-                    ? `right ${animationSpeed / 1000}s`
-                    : idx === index - 1
-                    ? `left ${animationSpeed / 1000}s`
+                    ? `right1 ${animationSpeed / 1000}s`
+                    : index > index1
+                    ? `left1 ${animationSpeed / 1000}s`
                     : "",
                 position: "relative",
                 // idx === index ? "right" : idx === index - 1 ? "left" : "",
@@ -117,9 +160,9 @@ const InsertionSort = () => {
               style={{
                 animation:
                   idx === index
-                    ? `right ${animationSpeed / 1000}s`
+                    ? `right1 ${animationSpeed / 1000}s`
                     : idx === index - 1
-                    ? `left ${animationSpeed / 1000}s`
+                    ? `left1 ${animationSpeed / 1000}s`
                     : "",
                 position: "relative",
                 // idx === index ? "right" : idx === index - 1 ? "left" : "",
@@ -134,7 +177,7 @@ const InsertionSort = () => {
       </div>
       <div className="button-container">
         <button onClick={generateArray}>Generate New Array</button>
-        <button onClick={insertionSort}>Insertion Sort</button>
+        <button onClick={selectionSort}>Selection Sort</button>
         <label htmlFor="animationSpeed">Animation Speed:</label>
         <Box sx={{ width: 300 }}>
           <Slider
@@ -162,4 +205,4 @@ const InsertionSort = () => {
   );
 };
 
-export default InsertionSort;
+export default SelectionSort;

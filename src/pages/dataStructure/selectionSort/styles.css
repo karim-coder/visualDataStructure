@@ -1,0 +1,81 @@
+.App {
+  /* text-align: center; */
+  /* margin-top: 50px; */
+}
+
+header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.array-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 400px;
+  width: auto;
+  margin: 0 auto;
+}
+
+.array-bar {
+  width: 25px;
+  margin: 0 5px;
+  background-color: #333;
+  /* animation: left 5s 2; */
+  /* transition: all 0s ease-in; */
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+button {
+  font-size: 1rem;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+label {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+input[type="range"] {
+  width: 200px;
+}
+
+@keyframes left {
+  0% {
+    left: 0px;
+    top: 0px;
+  }
+  100% {
+    left: 35px;
+    top: 0px;
+  }
+}
+@keyframes right {
+  0% {
+    /* background: red; */
+    right: 0px;
+    top: 0px;
+  }
+  100% {
+    /* background: yellow; */
+    right: 35px;
+    top: 0px;
+  }
+}
+
+.box {
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 50%;
+  cursor: pointer;
+}
