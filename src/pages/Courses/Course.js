@@ -128,6 +128,7 @@ const Course = () => {
           <Links link="/course/bubble-sort" title="Bubble Sort" />
           <Links link="/course/insertion-sort" title="Insertion Sort" />
           <Links link="/course/selection-sort" title="Selection Sort" />
+          <Links link="/course/merge-sort" title="Merge Sort" />
         </div>
       </Grid>
 

@@ -31,9 +31,10 @@ function valueLabelFormat(value) {
 
 const SelectionSort = () => {
   const [array, setArray] = useState([]);
-  const [animationSpeed, setAnimationSpeed] = useState(1000);
+  const [animationSpeed, setAnimationSpeed] = useState(3000);
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
+  const [isSorting, setIsSorting] = useState(false);
 
   useEffect(() => {
     generateArray();
@@ -47,56 +48,43 @@ const SelectionSort = () => {
     setArray(newArray);
   };
 
-  const insertionSort = async () => {
-    for (let i = 1; i < array.length; i++) {
-      let currentVal = array[i];
-
-      let j;
-      for (j = i - 1; j >= 0 && array[j] > currentVal; j--) {
-        console.log(animationSpeed);
-        array[j + 1] = array[j];
-
-        await new Promise((resolve) => setTimeout(resolve, animationSpeed));
-        array[j] = [currentVal];
-        setArray([...array]);
-      }
-      setIndex(null);
-      array[j + 1] = currentVal;
-      await new Promise((resolve) => setTimeout(resolve, animationSpeed));
-      setArray([...array]);
-    }
-  };
-
   const selectionSort = async () => {
+    setIsSorting(true);
     for (let i = 0; i < array.length - 1; i++) {
       let minIdx = i;
-      setIndex1(i);
 
       for (let j = i + 1; j < array.length; j++) {
         // await new Promise((resolve) => setTimeout(resolve, animationSpeed));
         //  setIndex(j);
         if (array[j] < array[minIdx]) {
-          setIndex(j);
           minIdx = j;
         }
       }
+      setIndex(minIdx);
+      setIndex1(i);
+      await new Promise((resolve) => setTimeout(resolve, animationSpeed));
+
       let temp = array[i];
       array[i] = array[minIdx];
       array[minIdx] = temp;
-      await new Promise((resolve) => setTimeout(resolve, animationSpeed));
       setArray([...array]);
     }
+    setIsSorting(false);
+    setIndex(null);
+    // setIndex1(null);
   };
+  console.log(array[index1], array[index]);
+  console.log(index1, index);
   let styleSheet = document.styleSheets[0];
   let keyframes = `
     @-webkit-keyframes left1 {
      
         0% {
-          left: 0px;
+          right: 0px;
           top: 0px;
         }
         100% {
-          left: 35px;
+          right:  ${(index - index1) * 35}px;
           top: 0px;
         }
       
@@ -111,17 +99,26 @@ const SelectionSort = () => {
 
         0% {
           /* background: red; */
-          right: 0px;
+          left: 0px;
           top: 0px;
         }
         100% {
           /* background: yellow; */
-          right:  ${(index - index1) * 35}px;
+          left: 35px;
           top: 0px;
         }
 
     }`;
   styleSheet.insertRule(right1, styleSheet.cssRules.length);
+
+  let moveRight = `
+  @keyframes move-right {
+    0% { transform: translateX(0px); }
+    100% { transform: translateX(${(index - index1) * 35}px); }
+  }
+`;
+
+  styleSheet.insertRule(moveRight, styleSheet.cssRules.length);
 
   return (
     <div>
@@ -129,51 +126,58 @@ const SelectionSort = () => {
         <h1>Selection Sort </h1>
       </header>
 
-      <div className="array-container">
-        {array.map((value, idx) => (
-          <div>
-            <div
-              className="array-bar"
-              key={idx}
-              style={{
-                height: `${value}px`,
-                backgroundColor:
-                  idx === index ? "red" : idx < index1 ? "green" : "black",
-                // animationName: idx === index ? "left" : "",
-                animation:
-                  idx === index
-                    ? `right1 ${animationSpeed / 1000}s`
-                    : index > index1
-                    ? `left1 ${animationSpeed / 1000}s`
-                    : "",
-                position: "relative",
-                // idx === index ? "right" : idx === index - 1 ? "left" : "",
-                ease: "easeOut",
-                // animationDuration: "1s",
+      <div className={`array-container ${isSorting ? "move-right" : ""}`}>
+        {array.map((value, idx) => {
+          if (isSorting && idx === index) {
+          } else if (isSorting && idx + 1 > index1 && idx + 1 < index) {
+            console.log("HI", idx, index1, index);
+          }
+          return (
+            <div>
+              <div
+                className="array-bar"
+                key={idx}
+                style={{
+                  height: `${value}px`,
+                  backgroundColor:
+                    idx === index ? "red" : idx < index1 ? "green" : "black",
+                  // animationName: idx === index ? "left" : "",
+                  animation:
+                    isSorting && idx === index
+                      ? `left1 ${animationSpeed / 1000}s`
+                      : isSorting &&
+                        idx + 1 > index1 &&
+                        idx + 1 < index &&
+                        `right1 ${animationSpeed / 1000}s`,
+                  position: "relative",
+                  // idx === index ? "right" : idx === index - 1 ? "left" : "",
+                  ease: "easeOut",
+                  // animationDuration: "1s",
 
-                // animationIterationCount: 1,
-                // animationDirection: "normal",
-                // animationFillMode: "forwards",
-              }}
-            ></div>
-            <p
-              style={{
-                animation:
-                  idx === index
-                    ? `right1 ${animationSpeed / 1000}s`
-                    : idx === index - 1
-                    ? `left1 ${animationSpeed / 1000}s`
-                    : "",
-                position: "relative",
-                // idx === index ? "right" : idx === index - 1 ? "left" : "",
-                ease: "easeOut",
-                textAlign: "center",
-              }}
-            >
-              {value}
-            </p>
-          </div>
-        ))}
+                  // animationIterationCount: 1,
+                  // animationDirection: "normal",
+                  // animationFillMode: "forwards",
+                }}
+              ></div>
+              <p
+                style={{
+                  animation:
+                    isSorting && idx === index
+                      ? `left1 ${animationSpeed / 1000}s`
+                      : isSorting && idx + 1 > index1 && idx <= index
+                      ? `right1 ${animationSpeed / 1000}s`
+                      : "",
+                  position: "relative",
+                  // idx === index ? "right" : idx === index - 1 ? "left" : "",
+                  ease: "easeOut",
+                  textAlign: "center",
+                }}
+              >
+                {value}
+              </p>
+            </div>
+          );
+        })}
       </div>
       <div className="button-container">
         <button onClick={generateArray}>Generate New Array</button>

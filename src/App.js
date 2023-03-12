@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import Stack from "./pages/dataStructure/stack";
 import Array from "./pages/dataStructure/array";
 import Courses from "./pages/Courses";
+import AdminRoutes from "./pages/Admin/AdminRoutes";
+
 import Layout from "./components/layout";
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
@@ -94,6 +96,20 @@ function App() {
               </Suspense>
             }
           /> */}
+        </Route>
+
+        {/* Admin routes */}
+        <Route path="/">
+          {/* <Route
+            exact
+            path="/admin"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Login />
+              </Suspense>
+            }
+          /> */}
+          <Route path="/admin/*" element={<AdminRoutes />} />
         </Route>
       </Routes>
     </div>

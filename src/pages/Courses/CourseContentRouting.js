@@ -10,6 +10,7 @@ import Graph from "../dataStructure/graph";
 import HashTable from "../dataStructure/hashTable";
 import InsertionSort from "../dataStructure/insertionSort";
 import SelectionSort from "../dataStructure/selectionSort";
+import MergeSort from "../dataStructure/mergeSort";
 
 const CourseContentRouting = () => {
   // let location = useLocation();
@@ -96,6 +97,15 @@ const CourseContentRouting = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <SelectionSort />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="merge-sort"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <MergeSort />
           </Suspense>
         }
       />
