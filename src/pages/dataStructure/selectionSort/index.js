@@ -31,7 +31,7 @@ function valueLabelFormat(value) {
 
 const SelectionSort = () => {
   const [array, setArray] = useState([]);
-  const [animationSpeed, setAnimationSpeed] = useState(3000);
+  const [animationSpeed, setAnimationSpeed] = useState(1000);
   const [index, setIndex] = useState(null);
   const [index1, setIndex1] = useState(null);
   const [isSorting, setIsSorting] = useState(false);
@@ -143,12 +143,13 @@ const SelectionSort = () => {
                     idx === index ? "red" : idx < index1 ? "green" : "black",
                   // animationName: idx === index ? "left" : "",
                   animation:
-                    isSorting && idx === index
-                      ? `left1 ${animationSpeed / 1000}s`
-                      : isSorting &&
-                        idx + 1 > index1 &&
-                        idx + 1 < index &&
-                        `right1 ${animationSpeed / 1000}s`,
+                    isSorting &&
+                    idx === index &&
+                    `left1 ${animationSpeed / 1000}s`,
+                  // : isSorting &&
+                  //   idx + 1 > index1 &&
+                  //   idx + 1 < index &&
+                  //   `right1 ${animationSpeed / 1000}s`,,
                   position: "relative",
                   // idx === index ? "right" : idx === index - 1 ? "left" : "",
                   ease: "easeOut",
@@ -162,11 +163,9 @@ const SelectionSort = () => {
               <p
                 style={{
                   animation:
-                    isSorting && idx === index
-                      ? `left1 ${animationSpeed / 1000}s`
-                      : isSorting && idx + 1 > index1 && idx <= index
-                      ? `right1 ${animationSpeed / 1000}s`
-                      : "",
+                    isSorting &&
+                    idx === index &&
+                    `left1 ${animationSpeed / 1000}s`,
                   position: "relative",
                   // idx === index ? "right" : idx === index - 1 ? "left" : "",
                   ease: "easeOut",

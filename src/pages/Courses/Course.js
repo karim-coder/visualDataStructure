@@ -25,6 +25,7 @@ import LensBlurIcon from "@mui/icons-material/LensBlur";
 import AllOutIcon from "@mui/icons-material/AllOut";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { withTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -69,7 +70,7 @@ const Links = (props) => {
   );
 };
 
-const Course = () => {
+const Course = (props) => {
   return (
     <Grid
       container
@@ -117,18 +118,40 @@ const Course = () => {
               fontFamily: "Martian Mono",
             }}
           >
-            Data Structures
+            {props.t("sideBarMenu.dataStructure")}
           </Typography>
 
           {/* <Links link="/course/array" title="Array - Data Structure" /> */}
-          <Links link="/course/stack" title="Stack" />
-          <Links link="/course/queue" title="Queue" />
-          <Links link="/course/linked-list" title="Linked-List" />
-          <Links link="/course/hash-table" title="Hash Table" />
-          <Links link="/course/bubble-sort" title="Bubble Sort" />
-          <Links link="/course/insertion-sort" title="Insertion Sort" />
-          <Links link="/course/selection-sort" title="Selection Sort" />
-          <Links link="/course/merge-sort" title="Merge Sort" />
+          <Links link="/course/stack" title={props.t("sideBarMenu.stack")} />
+          <Links link="/course/queue" title={props.t("sideBarMenu.queue")} />
+          <Links
+            link="/course/linked-list"
+            title={props.t("sideBarMenu.linkedList")}
+          />
+          <Links
+            link="/course/hash-table"
+            title={props.t("sideBarMenu.hashTable")}
+          />
+          <Links
+            link="/course/bubble-sort"
+            title={props.t("sideBarMenu.bubbleSort")}
+          />
+          <Links
+            link="/course/insertion-sort"
+            title={props.t("sideBarMenu.insertionSort")}
+          />
+          <Links
+            link="/course/selection-sort"
+            title={props.t("sideBarMenu.selectionSort")}
+          />
+          <Links
+            link="/course/merge-sort"
+            title={props.t("sideBarMenu.mergeSort")}
+          />
+          <Links
+            link="/course/heap-sort"
+            title={props.t("sideBarMenu.heapSort")}
+          />
         </div>
       </Grid>
 
@@ -148,4 +171,5 @@ const Course = () => {
   );
 };
 
-export default Course;
+// export default Course;
+export default withTranslation("translations")(Course);

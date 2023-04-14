@@ -1,0 +1,27 @@
+{
+  "dashboard": {
+    "text": "ساختار داده ها و الگوریتم ها را بیاموزید",
+    "subText": "آموزش آنلاین با سرعت خودتان با ما دوره DSA. اصول اولیه DSA را فرا بگیرید و سوالات مصاحبه ساختار داده را با GFG DSA خود گام تمرین کنید.",
+    "about": "درباره",
+    "login": "وارد شدن",
+    "courses": "دوره های آموزشی"
+  },
+  "topNavBar": {
+    "logout": "Logout",
+    "language": "زبان",
+    "menu": "Menu",
+    "moreMenu": "More Menu"
+  },
+  "sideBarMenu": {
+    "dataStructure": "ساختار داده",
+    "stack": "سبد",
+    "queue": "صف",
+    "linkedList": "فهرست پیوند شده",
+    "hashTable": "جدول هش",
+    "bubbleSort": "مرتب‌سازی حبابی",
+    "insertionSort": "مرتب سازی درج",
+    "selectionSort": "انتخاب مرتب سازی",
+    "mergeSort": "ادغام مرتب سازی",
+    "heapSort": "دسته بندی"
+  }
+}

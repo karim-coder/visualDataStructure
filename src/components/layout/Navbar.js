@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +9,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate, Link } from "react-router-dom";
@@ -19,13 +18,112 @@ import ConfigAPIURL from "../../config/ConfigAPIURL";
 import isEmpty from "../../utils/isEmpty";
 import { useDispatch, useSelector } from "react-redux";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import "./styles.css";
+import {
+  Collapse,
+  Drawer,
+  Hidden,
+  Snackbar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  Alert,
+} from "@mui/material";
+import LanguageConfig from "../../config/LanguageConfig";
+import { withTranslation } from "react-i18next";
+import { makeStyles } from "@mui/styles";
+import TranslateIcon from "@mui/icons-material/Translate";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
-const pages = ["Courses", "About"];
+const useStyles = makeStyles((theme) => ({
+  adminRoot: {
+    display: "flex",
+    // zoom: '85%',
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    position: "relative",
+    height: "100%",
+    width: "calc(100% - 250px)",
+  },
+  contentDesktop: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    position: "relative",
+    height: "100%",
+    width: "calc(100% - 250px)",
+  },
+  background: {
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    position: "fixed",
+    background: theme.palette.background.default,
+  },
+  backgroundColor: {
+    height: "400px",
+    backgroundImage: theme.custom.containerColor,
+    backgroundAttachment: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    position: "absolute",
+  },
+  backgroundImage: {
+    left: "-2px",
+    width: "100%",
+    bottom: "-32px",
+    position: "absolute",
+    height: "auto",
+    transform: "scale(1.1,0.8)",
+    transformOrigin: "bottom",
+  },
+  backgroundImageMobile: {
+    width: "100%",
+    bottom: "-25px",
+    position: "absolute",
+    height: "auto",
+    transformOrigin: "bottom",
+  },
+  textLimit: {
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+  },
+  menuStyle: {
+    // color: theme.custom.sideDrawer.menuColor,
+    backgroundColor: "green",
+    width: "100%",
+    height: "100%",
+    color: "white",
+  },
+  drawerPaper: {
+    height: "auto",
+    minHeight: 150,
+    maxHeight: 300,
+    overflowY: "auto",
+  },
+  nested: {
+    // paddingLeft: theme.spacing(9),
+    backgroundColor: "red",
+  },
+}));
+
+const pages = ["courses", "about"];
 const courses = ["Data Structures", "Sorting Algorithm", "Searching Algorithm"];
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [menuStatus, setMenuStatus] = React.useState({ language: false });
 
   const user = useSelector((store) => store.user);
 
@@ -33,6 +131,15 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [languageList, setLanguageList] = React.useState([]);
+
+  useEffect(() => {
+    LanguageConfig.languageList().then((lngList) => {
+      setLanguageList(lngList);
+    });
+    props.i18n.changeLanguage(props.languageData.code);
+  }, []);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -74,6 +181,48 @@ const Navbar = () => {
       }
     });
     handleMenuClose();
+  };
+
+  const languageChange = (data) => {
+    props.i18n.changeLanguage(data.code);
+    props.languageChange(data);
+    localStorage.setItem("lng", JSON.stringify(data));
+    handleLanguageMenuClose();
+  };
+  const [languageDropdown, setLanguageDropdown] = React.useState(null);
+  const handleLanguageMenuClick = (event) => {
+    setLanguageDropdown(event.currentTarget);
+  };
+  const handleLanguageMenuClose = () => {
+    setLanguageDropdown(null);
+  };
+  const LanguageList = () => {
+    return languageList.map((lng, lngIndex) => (
+      <Collapse
+        in={menuStatus["language"] ? menuStatus["language"] : false}
+        timeout="auto"
+        unmountOnExit
+        key={lngIndex}
+      >
+        <List component="div" disablePadding>
+          <ListItem
+            button
+            className={classes.nested}
+            selected={
+              lng.displayName === props.languageData.displayName ? true : false
+            }
+            onClick={() => languageChange(lng)}
+          >
+            <Tooltip title={lng.displayName}>
+              <ListItemText
+                className={[classes.textLimit, classes.menuStyle]}
+                primary={lng.displayName}
+              />
+            </Tooltip>
+          </ListItem>
+        </List>
+      </Collapse>
+    ));
   };
 
   const isMenuOpen = Boolean(anchorEl);
@@ -144,9 +293,49 @@ const Navbar = () => {
                   fontSize: 15,
                 }}
               >
-                LOGO
+                Logo
               </Link>
             </Box>
+
+            <List
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: 5,
+                color: "white",
+              }}
+            >
+              <ListItem
+                button
+                key={1}
+                onClick={() =>
+                  setMenuStatus({
+                    ...menuStatus,
+                    language: !menuStatus["language"],
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <TranslateIcon color="white" />
+                </ListItemIcon>
+                <Tooltip title={props.t("topNavBar.language")}>
+                  <ListItemText
+                    className={classes.menuStyle}
+                    primary={
+                      props.languageData !== undefined &&
+                      props.languageData !== null
+                        ? props.t("topNavBar.language") +
+                          " ( " +
+                          props.languageData.displayName +
+                          " ) "
+                        : props.t("topNavBar.language") + " ( English ) "
+                    }
+                  />
+                </Tooltip>
+                {menuStatus["language"] ? <ExpandMore /> : <ExpandLess />}
+              </ListItem>
+              <LanguageList />
+            </List>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -179,7 +368,9 @@ const Navbar = () => {
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Typography textAlign="center">
+                      {props.t(`dashboard.${page}`)}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -201,7 +392,7 @@ const Navbar = () => {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              {props.t(`dashboard.login`)}
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Box sx={{ flexGrow: 0 }}>
@@ -209,7 +400,7 @@ const Navbar = () => {
                   onClick={handleOpenUserMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  Courses
+                  {props.t(`dashboard.courses`)}
                 </Button>
 
                 <Menu
@@ -239,7 +430,7 @@ const Navbar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {"About"}
+                {props.t(`dashboard.about`)}
               </Button>
             </Box>
             {user === {} ? (
@@ -260,7 +451,7 @@ const Navbar = () => {
               </IconButton>
             ) : (
               <Button color="inherit" onClick={() => navigate("/login")}>
-                Login
+                {props.t(`dashboard.login`)}
               </Button>
             )}
 
@@ -301,4 +492,22 @@ const Navbar = () => {
   );
 };
 
-export default connect()(Navbar);
+// export default connect()(Navbar);
+
+// export default withTranslation("translations")(connect()(Navbar));
+
+const mapStateToProps = (state) => {
+  return {
+    languageData: state.languageData,
+  };
+};
+const mapDispachToProps = (dispatch) => {
+  return {
+    languageChange: (languageData) =>
+      dispatch({ type: "LANGUAGE", value: languageData }),
+  };
+};
+
+export default withTranslation("translations")(
+  connect(mapStateToProps, mapDispachToProps)(Navbar)
+);

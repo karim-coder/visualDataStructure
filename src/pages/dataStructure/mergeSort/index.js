@@ -1,77 +1,195 @@
 import React, { useState, useEffect } from "react";
+
 import "./styles.css";
 
-function MergeSort() {
-  const [state, setState] = useState([4, 1, 3, 6, 4, 7, 8]);
+function App() {
+  const [myArray, setMyArray] = useState([38, 27, 43, 3, 9, 82, 10]);
+  const [myDivided, setDivided] = useState([]);
+  const [merged, setMerged] = useState([]);
 
-  const mergeSort = (arr) => {
-    if (arr.length <= 1) return arr;
+  // useEffect(() => {
+  //   generateArray();
+  // }, []);
 
-    const middle = Math.floor(arr.length / 2);
-    const left = mergeSort(arr.slice(0, middle));
-    const right = mergeSort(arr.slice(middle));
+  const generateArray = () => {
+    setDivided([]);
+    setMerged([]);
+    const arr3 = [];
+    let a = Math.floor(Math.random() * 10) + 1;
+    for (let i = 0; i < a; i++) {
+      arr3.push(Math.floor(Math.random() * 100) + 1);
+    }
+    console.log("New", a);
+    setMyArray([...arr3]);
+  };
 
-    const merged = [];
-    let i = 0,
-      j = 0;
-    while (i < left.length && j < right.length) {
-      if (left[i] < right[j]) {
-        merged.push(left[i]);
-        i++;
-      } else {
-        merged.push(right[j]);
-        j++;
+  const divideArray = async (arr) => {
+    let divided = [arr.slice()];
+    const result = [];
+    result.push(divided);
+
+    while (divided.some((subArr) => subArr.length > 1)) {
+      const newDivided = [];
+      for (const subArr of divided) {
+        const half = Math.ceil(subArr.length / 2);
+        newDivided.push(subArr.slice(0, half));
+        newDivided.push(subArr.slice(half));
+      }
+      result.push(newDivided);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      setDivided([...result]);
+      divided = newDivided;
+    }
+    result.push(divided);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setDivided([...result]);
+
+    mergeArrays([...result[result.length - 1]]);
+
+    // return result;
+  };
+
+  const mergeArrays = async (arr) => {
+    console.log("ARR: ", arr);
+    const result1 = [];
+
+    // Only push non-empty arrays to result1
+    // if (arr.some((subArr) => Array.isArray(subArr) && subArr.length > 0)) {
+    //   result1.push([...arr]);
+    // }
+
+    while (arr.length > 1) {
+      const merged = [];
+
+      for (let i = 0; i < arr.length; i += 2) {
+        const subArr1 = arr[i];
+        const subArr2 = i + 1 < arr.length ? arr[i + 1] : [];
+        const mergedSubArr = [...subArr1, ...subArr2]
+          .filter((item) => typeof item === "number")
+          .sort((a, b) => a - b);
+        merged.push(mergedSubArr);
+        // await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+
+      arr.splice(0, arr.length, ...merged);
+
+      // Only push non-empty arrays to result1
+      if (arr.some((subArr) => Array.isArray(subArr) && subArr.length > 0)) {
+        result1.push([...merged]);
+        setMerged([...result1]);
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
-    while (i < left.length) {
-      merged.push(left[i]);
-      i++;
-    }
-    while (j < right.length) {
-      merged.push(right[j]);
-      j++;
-    }
-    return merged;
+    setMerged([...result1]);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    // return result1;
   };
 
-  const animateSort = () => {
-    const arr = state.slice();
-    const sortedArray = mergeSort(arr);
-    const animations = [];
+  // const output = [];
+  // const output = mergeArrays(
+  //   divideArray(myArray)[divideArray(myArray).length - 1]
+  // );
 
-    // Add the animation classes to the elements as they move
-    const arrayBars = document.getElementsByClassName("array-bar");
-    for (let i = 0; i < animations.length; i++) {
-      const [index, newIndex] = animations[i];
-      const barStyle = arrayBars[index].style;
-      const newBarStyle = arrayBars[newIndex].style;
-      barStyle.backgroundColor = "red";
-      newBarStyle.backgroundColor = "red";
-      setTimeout(() => {
-        barStyle.height = `${sortedArray[newIndex]}px`;
-        newBarStyle.height = `${sortedArray[index]}px`;
-        barStyle.backgroundColor = "blue";
-        newBarStyle.backgroundColor = "blue";
-      }, i * 100);
-    }
-
-    setState(sortedArray);
-  };
-
+  console.log("Output: ", myDivided);
   return (
     <div>
-      <button onClick={animateSort}>Sort</button>
-      <div className="array-container">
-        {state.map((value, index) => (
-          <div
-            className="array-bar"
-            key={index}
-            style={{ height: `${value}px` }}
-          ></div>
-        ))}
+      <div className="button-container">
+        <button onClick={generateArray}>Generate New Array</button>
+      </div>
+      <div className="button-container">
+        <button
+          onClick={() => {
+            setDivided([]);
+            setMerged([]);
+            divideArray(myArray);
+          }}
+        >
+          Sort
+        </button>
+      </div>
+      <div>{myArray.join(", ")}</div>
+      <div className="container">
+        <div className="tree">
+          {myDivided.slice(0, -1).map((subtree, i) => (
+            <div key={`subtree-${i}`} className="subtree">
+              {subtree
+                .filter((item) => item.length > 0)
+                .map((item1, j) => (
+                  <div
+                    key={`subtree-item-${i}-${j}`}
+                    className={`subtree-item ${
+                      item1.length > 1 ? "merged" : ""
+                    }`}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    {item1.map((number, k) => (
+                      <div
+                        key={`subtree-item-${i}-${j}-${k}`}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          border: "1px solid black",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          margin: "0 15px",
+                        }}
+                      >
+                        {number}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="container">
+        <div className="tree">
+          {merged.length > 0 &&
+            merged.map((subtree, i) => (
+              <div key={`subtree-${i}`} className="subtree">
+                {subtree
+                  .filter((item) => item.length > 0)
+                  .map((item1, j) => (
+                    <div
+                      key={`subtree-item-${i}-${j}`}
+                      className={`subtree-item ${
+                        item1.length > 1 ? "merged" : ""
+                      }`}
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      {item1.map((number, k) => (
+                        <div
+                          key={`subtree-item-${i}-${j}-${k}`}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            border: "1px solid black",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "0 15px",
+                          }}
+                        >
+                          {number}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
 }
 
-export default MergeSort;
+export default App;

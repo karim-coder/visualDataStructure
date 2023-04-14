@@ -1,92 +1,76 @@
-.App {
-  /* text-align: center; */
-  /* margin-top: 50px; */
-}
-
-header {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.array-container {
+.container {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  height: 400px;
-  width: auto;
-  margin: 0 auto;
+  align-items: center;
+  /* height: 100vh; */
+  font-family: sans-serif;
 }
 
-.array-bar {
-  width: 25px;
-  margin: 0 5px;
-  background-color: #333;
-  /* animation: left 5s 2; */
-  /* transition: all 0s ease-in; */
+.tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.button-container {
-  margin-top: 20px;
+.subtree {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-button {
-  font-size: 1rem;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.subtree-item {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  min-height: 80px;
+  /* background-color: #fff; */
+  border: 2px solid #000;
+  margin: 0 20px;
+  /* border-radius: 50%; */
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
-label {
-  font-size: 1rem;
-  margin-right: 10px;
+/* .subtree-item:hover {
+  transform: scale(1.1);
+} */
+
+.subtree-item::after {
+  content: "";
+  width: 40px;
+  height: 2px;
+  background-color: #000;
+  position: absolute;
+  top: 50%;
+  left: -43px;
+  z-index: -1;
+  overflow: hidden;
+}
+.subtree-item::before {
+  content: "";
+  width: 40px;
+  height: 2px;
+  background-color: #000;
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  z-index: -1;
+  overflow: hidden;
 }
 
-input[type="range"] {
-  width: 200px;
+.subtree-item:first-child::before {
+  display: none;
 }
-
-@keyframes left {
-  0% {
-    left: 0px;
-    top: 0px;
-  }
-  100% {
-    left: 35px;
-    top: 0px;
-  }
-}
-@keyframes right {
-  0% {
-    /* background: red; */
-    right: 0px;
-    top: 0px;
-  }
-  100% {
-    /* background: yellow; */
-    right: 35px;
-    top: 0px;
-  }
-}
-
-.box {
-  width: 30px;
-  height: 30px;
-  background: red;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.array-bar {
-  background-color: blue;
-  margin-right: 1px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.array-bar-move {
-  transition: height 0.1s ease-out, background-color 0.1s;
+.subtree-item:first-child::after {
+  display: none;
 }

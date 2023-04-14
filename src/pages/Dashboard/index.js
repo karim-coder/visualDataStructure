@@ -14,11 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { withTranslation } from "react-i18next";
+import { connect } from "react-redux";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -37,6 +39,9 @@ const Dashboard = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  console.log("HI", props.t("topNavBar"));
+  console.log("HI", JSON.parse(localStorage.getItem("lng")));
 
   return (
     <Container style={{ textAlign: "center" }} maxWidth={"xl"}>
@@ -57,12 +62,10 @@ const Dashboard = () => {
       >
         <Grid xl={6} lg={6} md={12} sm={12} xs={12}>
           <Typography variant="body1" style={{ fontSize: 50, fontWeight: 800 }}>
-            Learn Data Structures and Algorithms
+            {props.t("dashboard.text")}
           </Typography>
           <Typography variant="body1" style={{ fontSize: 20, fontWeight: 600 }}>
-            Learn online at Your Own Pace with us DSA Course. Master DSA basics
-            and practice Data Structure interview questions with GFG DSA self
-            paced.
+            {props.t("dashboard.subText")}
           </Typography>
         </Grid>
         <Grid xl={6} lg={6} md={12} sm={12} xs={12}>
@@ -194,6 +197,9 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+// export default Dashboard;
+
+// export default withTranslation("translations")(connect()(Dashboard));
+export default withTranslation("translations")(connect()(Dashboard));
 
 // box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;

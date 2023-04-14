@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 const Layout = (props) => {
   return (
@@ -13,4 +14,5 @@ const Layout = (props) => {
   );
 };
 
-export default Layout;
+// export default Layout;
+export default withTranslation("translations")(Layout);

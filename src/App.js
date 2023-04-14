@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 // import { ToastContainer } from "react-toastify";
 import "./App.css";
@@ -8,15 +8,18 @@ import Stack from "./pages/dataStructure/stack";
 import Array from "./pages/dataStructure/array";
 import Courses from "./pages/Courses";
 import AdminRoutes from "./pages/Admin/AdminRoutes";
-
+import Topbar from "./pages/Admin/Topbar";
 import Layout from "./components/layout";
+import { withTranslation } from "react-i18next";
+
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Quiz = lazy(() => import("./pages/Quiz"));
 const MyTests = lazy(() => import("./pages/MyTests"));
 
-function App() {
+function App(props) {
+  const [isSidebar, setIsSidebar] = useState(true);
   return (
     <div className="App">
       <Routes>
@@ -35,7 +38,7 @@ function App() {
             path="home"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <Dashboard />
+                <Dashboard props={props} />
               </Suspense>
             }
           />
@@ -116,4 +119,5 @@ function App() {
   );
 }
 
-export default App;
+// export default App;
+export default withTranslation("translations")(App);

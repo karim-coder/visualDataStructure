@@ -7,11 +7,11 @@
 // };
 
 const initialState = {
-  theme: localStorage.getItem("adminTheme") || "LIGHT",
-  // languageData: JSON.parse(localStorage.getItem("lng")) || {
-  //   displayName: "English",
-  //   code: "en",
-  // },
+  // theme: localStorage.getItem("adminTheme") || "LIGHT",
+  languageData: JSON.parse(localStorage.getItem("lng")) || {
+    displayName: "English",
+    code: "en",
+  },
   user: {},
   // notification: notificationDefaultSetUp,
   // displaySearchScreen: false,
@@ -28,9 +28,9 @@ const reducer = (state = initialState, action) => {
     case "THEME":
       newState.theme = action.value;
       break;
-    // case "LANGUAGE":
-    //   newState.languageData = action.value;
-    //   break;
+    case "LANGUAGE":
+      newState.languageData = action.value;
+      break;
     // case "NOTIFICATION_OPEN":
     //   newState.notification = action.value;
     //   break;

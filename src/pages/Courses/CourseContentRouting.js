@@ -11,6 +11,7 @@ import HashTable from "../dataStructure/hashTable";
 import InsertionSort from "../dataStructure/insertionSort";
 import SelectionSort from "../dataStructure/selectionSort";
 import MergeSort from "../dataStructure/mergeSort";
+import HeapSort from "../dataStructure/heapSort";
 
 const CourseContentRouting = () => {
   // let location = useLocation();
@@ -106,6 +107,15 @@ const CourseContentRouting = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <MergeSort />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="heap-sort"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <HeapSort />
           </Suspense>
         }
       />

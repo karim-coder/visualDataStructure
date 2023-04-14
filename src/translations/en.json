@@ -1,0 +1,27 @@
+{
+  "dashboard": {
+    "text": "Learn Data Structures and Algorithms",
+    "subText": "Learn online at Your Own Pace with us DSA Course. Master DSA basics and practice Data Structure interview questions with GFG DSA self paced.",
+    "about": "About",
+    "login": "Login",
+    "courses": "Courses"
+  },
+  "topNavBar": {
+    "logout": "Logout",
+    "language": "Language",
+    "menu": "Menu",
+    "moreMenu": "More Menu"
+  },
+  "sideBarMenu": {
+    "dataStructure": "Data Structure",
+    "stack": "Stack",
+    "queue": "Queue",
+    "linkedList": "Linked List",
+    "hashTable": "Hash Table",
+    "bubbleSort": "Bubble Sort",
+    "insertionSort": "Insertion Sort",
+    "selectionSort": "Selection Sort",
+    "mergeSort": "Merge Sort",
+    "heapSort": "Heap Sort"
+  }
+}
