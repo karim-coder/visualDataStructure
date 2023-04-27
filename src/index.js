@@ -21,9 +21,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 i18next.init({
   // interpolation: { escapeValue: false }, // React already does escaping
-  lng: JSON.parse(localStorage.getItem("lng")).code || "en", // language to use
+  lng:
+    (JSON.parse(localStorage.getItem("lng")) &&
+      JSON.parse(localStorage.getItem("lng")).code) ||
+    "en", // language to use
   resources: LanguageConfig.I18ConfigResources(),
-  fallbackLng: JSON.parse(localStorage.getItem("lng")).code || "en",
+  fallbackLng:
+    (JSON.parse(localStorage.getItem("lng")) &&
+      JSON.parse(localStorage.getItem("lng")).code) ||
+    "en",
 });
 root.render(
   // <React.StrictMode>

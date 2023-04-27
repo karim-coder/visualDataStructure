@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import { Typography, Button, Link, Grid } from "@mui/material";
+
+import TextCode from "../../../components/TextCode";
+
 const TreeNode = ({ x, y, value }) => (
   <g transform={`translate(${x},${y})`}>
     <circle r="20" fill="white" stroke="black" strokeWidth="2" />
@@ -152,21 +156,144 @@ const App = () => {
   };
   console.log("Tree: ", tree);
 
+  const renderArray = () => {
+    return arr2.map((item, index) => (
+      <div
+        key={index}
+        style={{
+          marginRight: 5,
+          marginLeft: 5,
+          height: "50px",
+          width: "50px",
+          textAlign: "center",
+          lineHeight: "50px",
+          borderRadius: "5px",
+          border: "1px solid #cccccc",
+          fontWeight: "bold",
+          ease: "easeOut",
+          transition: "1s",
+          // marginRight: "5px",
+        }}
+      >
+        {item}
+      </div>
+    ));
+  };
+
   return (
     <div>
-      <button onClick={handleGenerateArray}>Generate Random Array</button>
+      <header>
+        <h1>Heap </h1>
+      </header>
+      <Typography variant="body1">
+        A heap is a complete binary tree, and the binary tree is a tree in which
+        the node can have utmost two children. Before knowing more about the
+        heap data structure, we should know about the complete binary tree.
+        <br />
+        What is a complete binary tree?
+        <br />
+        A complete binary tree is a binary tree in which all the levels except
+        the last level, i.e., leaf node should be completely filled, and all the
+        nodes should be left-justified.
+        <br />
+        A heap is a specialized tree-based data structure that satisfies the
+        heap property. The heap property is defined as either:
+        <br />
+        1. For a max heap, the value of each node is greater than or equal to
+        the values of its children nodes. <br />
+        2. For a min heap, the value of each node is less than or equal to the
+        values of its children nodes. <br />
+        In other words, a heap is a binary tree that satisfies the heap
+        property. A binary heap is typically represented as an array where each
+        element of the array represents a node in the binary tree. The root of
+        the tree is the first element of the array, and for any given element at
+        index i, the left child is at index 2i+1 and the right child is at index
+        2i+2. Heaps are commonly used for implementing priority queues, which
+        are abstract data types that allow efficient insertion and deletion of
+        items with associated priorities. The priority of an item in a priority
+        queue is typically represented by the value of the item itself.
+        <h4>Min Heap</h4>A min heap satisfies the property that the value of
+        each node is less than or equal to the values of its children nodes. In
+        other words, the minimum value in the heap is always stored at the root
+        of the tree.
+        <h4>Max Heap</h4>A max heap satisfies the property that the value of
+        each node is greater than or equal to the values of its children nodes.
+        In other words, the maximum value in the heap is always stored at the
+        root of the tree.
+      </Typography>
+
+      <button onClick={handleGenerateArray} style={{ marginTop: 20 }}>
+        Generate Random Array
+      </button>
       {/* <button onClick={minHeap}>Min Heap</button>x */}
-      <div>{arr2.join(", ")}</div>
-      <p>Max Heap</p>
+      <div style={{ display: "flex", marginTop: 20 }}>{renderArray()}</div>
+      <p>Min Heap</p>
       {tree && (
         <svg width="700" height="500">
           <Tree x={400} y={50} node={tree} />
         </svg>
       )}
-      <p>Min Heap</p>
+      <p>Max Heap</p>
       <svg width="700" height="500">
         <Tree x={400} y={50} node={maxHeapTree} />
       </svg>
+
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography
+          style={{
+            fontWeight: 600,
+            marginTop: 10,
+            borderBottom: "2px solid black",
+          }}
+        >
+          Algorithm
+        </Typography>
+      </div>
+
+      <TextCode
+        code={`Heapify(array, size, i)
+        set i as largest
+        leftChild = 2i + 1
+        rightChild = 2i + 2
+        
+        if leftChild > array[largest]
+          set leftChildIndex as largest
+        if rightChild > array[largest]
+          set rightChildIndex as largest
+      
+        swap array[i] and array[largest]
+       `}
+      />
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography
+          style={{
+            fontWeight: 600,
+            marginTop: 10,
+            borderBottom: "2px solid black",
+          }}
+        >
+          To create max heap
+        </Typography>
+      </div>
+
+      <TextCode
+        code={`MaxHeap(array, size)
+        loop from the first index of non-leaf node down to zero
+          call heapify
+       `}
+      />
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "selectionSort" }}
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
     </div>
   );
 };

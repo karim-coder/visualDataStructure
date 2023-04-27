@@ -7,8 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Stack from "./pages/dataStructure/stack";
 import Array from "./pages/dataStructure/array";
 import Courses from "./pages/Courses";
-import AdminRoutes from "./pages/Admin/AdminRoutes";
-import Topbar from "./pages/Admin/Topbar";
+
 import Layout from "./components/layout";
 import { withTranslation } from "react-i18next";
 
@@ -99,20 +98,6 @@ function App(props) {
               </Suspense>
             }
           /> */}
-        </Route>
-
-        {/* Admin routes */}
-        <Route path="/">
-          {/* <Route
-            exact
-            path="/admin"
-            element={
-              <Suspense fallback={<div>Loading...</div>}>
-                <Login />
-              </Suspense>
-            }
-          /> */}
-          <Route path="/admin/*" element={<AdminRoutes />} />
         </Route>
       </Routes>
     </div>

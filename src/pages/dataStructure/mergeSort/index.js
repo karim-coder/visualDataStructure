@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Typography, Button, Link, Grid } from "@mui/material";
+
+import TextCode from "../../../components/TextCode";
 
 import "./styles.css";
 
@@ -91,9 +94,49 @@ function App() {
   //   divideArray(myArray)[divideArray(myArray).length - 1]
   // );
 
-  console.log("Output: ", myDivided);
+  const renderArray = () => {
+    return myArray.map((item, index) => (
+      <div
+        key={index}
+        style={{
+          marginRight: 5,
+          marginLeft: 5,
+          height: "50px",
+          width: "50px",
+          textAlign: "center",
+          lineHeight: "50px",
+          borderRadius: "5px",
+          border: "1px solid #cccccc",
+          fontWeight: "bold",
+          ease: "easeOut",
+          transition: "1s",
+          // marginRight: "5px",
+        }}
+      >
+        {item}
+      </div>
+    ));
+  };
   return (
     <div>
+      <header>
+        <h1>Merge Sort </h1>
+      </header>
+      <Typography variant="body1">
+        Merge sort is the sorting technique that follows the divide and conquer
+        approach. This article will be very helpful and interesting to students
+        as they might face merge sort as a question in their examinations. In
+        coding or technical interviews for software engineers, sorting
+        algorithms are widely asked. So, it is important to discuss the topic.
+        <br />
+        Merge sort is similar to the quick sort algorithm as it uses the divide
+        and conquer approach to sort the elements. It is one of the most popular
+        and efficient sorting algorithm. It divides the given list into two
+        equal halves, calls itself for the two halves and then merges the two
+        sorted halves. We have to define the merge() function to perform the
+        merging.
+        <br />
+      </Typography>
       <div className="button-container">
         <button onClick={generateArray}>Generate New Array</button>
       </div>
@@ -108,7 +151,7 @@ function App() {
           Sort
         </button>
       </div>
-      <div>{myArray.join(", ")}</div>
+      <div style={{ display: "flex", marginTop: 20 }}>{renderArray()}</div>
       <div className="container">
         <div className="tree">
           {myDivided.slice(0, -1).map((subtree, i) => (
@@ -188,6 +231,44 @@ function App() {
             ))}
         </div>
       </div>
+
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography
+          style={{
+            fontWeight: 600,
+            marginTop: 10,
+            borderBottom: "2px solid black",
+          }}
+        >
+          Algorithm
+        </Typography>
+      </div>
+
+      <TextCode
+        code={`step 1: start
+        step 2: declare array and left, right, mid variable
+        step 3: perform merge function.
+            if left > right
+                return
+            mid= (left+right)/2
+            mergesort(array, left, mid)
+            mergesort(array, mid+1, right)
+            merge(array, left, mid, right)
+        step 4: Stop
+       `}
+      />
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "mergeSort" }}
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
     </div>
   );
 }

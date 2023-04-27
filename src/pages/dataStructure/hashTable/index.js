@@ -360,36 +360,6 @@ const HashTable = () => {
         complexity of Bubble sort is O(n2), where n is a number of items.
       </Typography>
 
-      {/* <h1>Counter: {counter}</h1> */}
-
-      {/* <TextField
-        // type="number"
-        label="Number"
-        size="small"
-        style={{ marginTop: 20 }}
-        value={input ? input : ""}
-        onChange={(e) => {
-          e.target.value = e.target.value.replace(/[A-Za-z!@#$%^&*().]/g, "");
-          setInput(e.target.value);
-        }}
-      /> */}
-
-      {/* <Box sx={{ width: 300 }}>
-        <Slider
-          aria-label="Restricted values"
-          defaultValue={1000}
-          max={1500}
-          valueLabelFormat={valueLabelFormat}
-          getAriaValueText={valuetext}
-          onChange={(e) => {
-            // setSpeed(e.target.value);
-          }}
-          step={null}
-          valueLabelDisplay="auto"
-          marks={marks}
-        />
-      </Box> */}
-
       <Grid sx={{ mt: 3 }}>
         <TagsInput
           selectedTags={(chip) => {

@@ -1,5 +1,6 @@
 import en from "../translations/en.json";
 import fa from "../translations/fa.json";
+import pa from "../translations/pa.json";
 const LanguageConfig = {
   languageList: async function () {
     let languageList = [
@@ -11,6 +12,10 @@ const LanguageConfig = {
         displayName: "Dari",
         code: "fa",
       },
+      {
+        displayName: "Pashto",
+        code: "pa",
+      },
     ];
     return languageList;
   },
@@ -21,6 +26,9 @@ const LanguageConfig = {
       },
       fa: {
         translations: fa,
+      },
+      pa: {
+        translations: pa,
       },
     };
     return resources;

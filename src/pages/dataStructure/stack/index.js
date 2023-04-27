@@ -20,6 +20,7 @@ import cpp from "react-syntax-highlighter/dist/esm/languages/prism/cpp";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import TextCode from "../../../components/TextCode";
+import { withTranslation } from "react-i18next";
 
 const questions = [
   {
@@ -72,7 +73,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Stack = () => {
+const Stack = (props) => {
   const [list, setList] = useState([1, 2, 3, 4, 5]);
   const [number, setNumber] = useState(null);
   const [poppedValue, setPoppedValue] = useState(20);
@@ -202,7 +203,7 @@ void show()
             display: "flex",
           }}
         >
-          Stack
+          {props.t("stack.stack")}
         </Typography>
       </div>
 
@@ -216,77 +217,70 @@ void show()
           fontWeight: 400,
         }}
       >
-        Stack is a linear data structure which follows a particular order in
-        which the operations are performed.
+        {props.t("stack.text1")}
         <br />
         <div style={{ display: "flex" }}>
           <Typography className={classes.title}>
-            LIFO( Last In First Out ):
+            {props.t("stack.text2")}
           </Typography>
         </div>
         <Typography className={classes.content}>
-          This strategy states that the element that is inserted last will come
-          out first. You can take a pile of plates kept on top of each other as
-          a real-life example. The plate which we put last is on the top and
-          since we remove the plate that is at the top, we can say that the
-          plate that was put last comes out first.
+          {props.t("stack.text3")}
         </Typography>
-        The order may be LIFO(Last In First Out) or FILO(First In Last Out).
-        There are many real-life examples of a stack. Consider an example of
-        plates stacked over one another in the canteen. The plate which is at
-        the top is the first one to be removed, i.e. the plate which has been
-        placed at the bottommost position remains in the stack for the longest
-        period of time. So, it can be simply seen to follow LIFO(Last In First
-        Out)/FILO(First In Last Out) order.
+        {props.t("stack.text4")}
       </Typography>
 
       <div style={{ display: "flex" }}>
         <Typography className={classes.title}>
-          Basic Operations on Stack
+          {props.t("stack.text5")}
         </Typography>
       </div>
       <Typography className={classes.normalText}>
-        In order to make manipulations in a stack, there are certain operations
-        provided to us.
+        {props.t("stack.text6")}
       </Typography>
 
       <ul>
         <li>
           <Typography className={classes.normalText}>
-            push() to insert an element into the stack{" "}
+            {props.t("stack.text7")}
           </Typography>
         </li>
         <li>
           <Typography className={classes.normalText}>
-            pop() to remove an element from the stack{" "}
+            {props.t("stack.text8")}
           </Typography>
         </li>
         <li>
           <Typography className={classes.normalText}>
-            top() Returns the top element of the stack.{" "}
+            {props.t("stack.text9")}
           </Typography>
         </li>
         <li>
           <Typography className={classes.normalText}>
-            isEmpty() returns true if stack is empty else false.
+            {props.t("stack.text10")}
           </Typography>
         </li>
         <li>
           <Typography className={classes.normalText}>
-            size() returns the size of stack.{" "}
+            {props.t("stack.text11")}
           </Typography>
         </li>
       </ul>
 
       <div style={{ display: "flex" }}>
-        <Typography className={classes.title}>Push:</Typography>
+        <Typography className={classes.title}>
+          {" "}
+          {props.t("stack.text12")}
+        </Typography>
       </div>
       <Typography className={classes.content}>
-        Adds an item to the stack. If the stack is full, then it is said to be
-        an Overflow condition.
+        {props.t("stack.text13")}
       </Typography>
       <div style={{ display: "flex" }}>
-        <Typography className={classes.title}>Algorithm for push:</Typography>
+        <Typography className={classes.title}>
+          {" "}
+          {props.t("stack.text14")}
+        </Typography>
       </div>
 
       <TextCode
@@ -302,16 +296,20 @@ end procedure`}
       />
 
       <div style={{ display: "flex" }}>
-        <Typography className={classes.title}>Pop:</Typography>
+        <Typography className={classes.title}>
+          {" "}
+          {props.t("stack.text15")}
+        </Typography>
       </div>
       <Typography className={classes.content}>
-        Removes an item from the stack. The items are popped in the reversed
-        order in which they are pushed. If the stack is empty, then it is said
-        to be an Underflow condition.
+        {props.t("stack.text16")}
       </Typography>
 
       <div style={{ display: "flex" }}>
-        <Typography className={classes.title}>Algorithm for pop:</Typography>
+        <Typography className={classes.title}>
+          {" "}
+          {props.t("stack.text17")}
+        </Typography>
       </div>
 
       <TextCode
@@ -361,7 +359,7 @@ end procedure`}
               disabled={popping || show}
               onClick={() => setList([])}
             >
-              Clear Stack
+              {props.t("stack.text25")}
             </Button>
             <Button
               style={{
@@ -392,7 +390,7 @@ end procedure`}
                     }
               }
             >
-              Pop
+              {props.t("stack.text26")}
             </Button>
             <Button
               style={{
@@ -424,7 +422,7 @@ end procedure`}
                     }
               }
             >
-              Push
+              {props.t("stack.text27")}
             </Button>
             {show ? (
               <TransitionGroup>
@@ -456,7 +454,7 @@ end procedure`}
                 alignItems: "center",
               }}
             >
-              Popped Value:
+              {props.t("stack.text28")}
               <Typography
                 style={{
                   padding: "5px 10px",
@@ -546,7 +544,7 @@ end procedure`}
                 marginTop: 55,
               }}
             >
-              Top --{">"} {list.length - 1}
+              {props.t("stack.text29")} --{">"} {list.length - 1}
             </Typography>
             {/* )} */}
           </div>
@@ -592,29 +590,38 @@ end procedure`}
         </Grid> */}
       </Grid>
       <Typography style={{ marginTop: 100, fontSize: 20, fontWeight: 600 }}>
-        Applications of Stack Data Structure
+        {props.t("stack.text17")}
       </Typography>
       <Typography style={{ fontSize: 18 }}>
-        Following is the various Applications of Stack in Data Structure:
+        {props.t("stack.text18")}
       </Typography>
       <ul>
         <li>
           <Typography style={{ fontSize: 18 }}>
-            Evaluation of Arithmetic Expressions
+            {props.t("stack.text19")}
           </Typography>
         </li>
         <li>
-          <Typography style={{ fontSize: 18 }}>Backtracking</Typography>
-        </li>
-        <li>
-          <Typography style={{ fontSize: 18 }}>Delimiter Checking</Typography>
-        </li>
-        <li>
-          <Typography style={{ fontSize: 18 }}>Reverse a Data</Typography>
+          <Typography style={{ fontSize: 18 }}>
+            {" "}
+            {props.t("stack.text20")}
+          </Typography>
         </li>
         <li>
           <Typography style={{ fontSize: 18 }}>
-            Processing Function Calls
+            {" "}
+            {props.t("stack.text21")}
+          </Typography>
+        </li>
+        <li>
+          <Typography style={{ fontSize: 18 }}>
+            {" "}
+            {props.t("stack.text22")}
+          </Typography>
+        </li>
+        <li>
+          <Typography style={{ fontSize: 18 }}>
+            {props.t("stack.text23")}
           </Typography>
         </li>
       </ul>
@@ -625,7 +632,7 @@ end procedure`}
           state={{ type: "stack" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>
-            Give a Test
+            {props.t("stack.text30")}
           </Button>
         </Link>
       </Grid>
@@ -641,4 +648,4 @@ end procedure`}
   );
 };
 
-export default Stack;
+export default withTranslation("translations")(Stack);

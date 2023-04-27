@@ -23,9 +23,12 @@ import { NavLink } from "react-router-dom";
 import BlurLinearIcon from "@mui/icons-material/BlurLinear";
 import LensBlurIcon from "@mui/icons-material/LensBlur";
 import AllOutIcon from "@mui/icons-material/AllOut";
-
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import { useSelector } from "react-redux";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { withTranslation } from "react-i18next";
+import { connect } from "react-redux";
+import isEmpty from "../../utils/isEmpty";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -46,6 +49,7 @@ const Links = (props) => {
               borderRadius: 3,
               padding: "10px 10px",
               justifyContent: "space-between",
+              marginLeft: 10,
             }
           : {
               display: "flex",
@@ -58,6 +62,7 @@ const Links = (props) => {
               fontSize: 16,
               // color: "black",
               justifyContent: "space-between",
+              marginLeft: 10,
             }
       }
       to={props.link}
@@ -65,12 +70,18 @@ const Links = (props) => {
       <Typography style={{ fontFamily: "Martian Mono", fontWeight: 400 }}>
         {props.title}
       </Typography>
-      <KeyboardArrowRightIcon />
+      {props.learned ? (
+        <CheckCircleRoundedIcon style={{ color: "green" }} />
+      ) : (
+        <KeyboardArrowRightIcon />
+      )}
     </NavLink>
   );
 };
 
 const Course = (props) => {
+  const user = useSelector((store) => store.user);
+  console.log("User: ", user);
   return (
     <Grid
       container
@@ -122,35 +133,154 @@ const Course = (props) => {
           </Typography>
 
           {/* <Links link="/course/array" title="Array - Data Structure" /> */}
-          <Links link="/course/stack" title={props.t("sideBarMenu.stack")} />
-          <Links link="/course/queue" title={props.t("sideBarMenu.queue")} />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("stack")
+                ? true
+                : false
+            }
+            link="/course/stack"
+            title={props.t("sideBarMenu.stack")}
+          />
+          <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("queue")
+                ? true
+                : false
+            }
+            link="/course/queue"
+            title={props.t("sideBarMenu.queue")}
+          />
+          <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("linkedList")
+                ? true
+                : false
+            }
             link="/course/linked-list"
             title={props.t("sideBarMenu.linkedList")}
           />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("hashTable")
+                ? true
+                : false
+            }
             link="/course/hash-table"
             title={props.t("sideBarMenu.hashTable")}
           />
+          <Typography
+            variant="body1"
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+              marginTop: 15,
+              marginBottom: 10,
+              marginLeft: 10,
+              color: "black",
+              fontFamily: "Martian Mono",
+            }}
+          >
+            Sorting Algorithms
+          </Typography>
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("bubbleSort")
+                ? true
+                : false
+            }
             link="/course/bubble-sort"
             title={props.t("sideBarMenu.bubbleSort")}
           />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("insertionSort")
+                ? true
+                : false
+            }
             link="/course/insertion-sort"
             title={props.t("sideBarMenu.insertionSort")}
           />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("selectionSort")
+                ? true
+                : false
+            }
             link="/course/selection-sort"
             title={props.t("sideBarMenu.selectionSort")}
           />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("mergeSort")
+                ? true
+                : false
+            }
             link="/course/merge-sort"
             title={props.t("sideBarMenu.mergeSort")}
           />
           <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("heapSort")
+                ? true
+                : false
+            }
             link="/course/heap-sort"
             title={props.t("sideBarMenu.heapSort")}
+          />
+          <Typography
+            variant="body1"
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+              marginTop: 15,
+              marginBottom: 10,
+              marginLeft: 10,
+              color: "black",
+              fontFamily: "Martian Mono",
+            }}
+          >
+            Searching Algorithms
+          </Typography>
+          <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("binarySearch")
+                ? true
+                : false
+            }
+            link="/course/binary-search"
+            title={"Binary Search"}
+          />
+          <Links
+            learned={
+              !isEmpty(user) &&
+              user?.topicLearned.length > 0 &&
+              user?.topicLearned.toString().includes("linearSearch")
+                ? true
+                : false
+            }
+            link="/course/linear-search"
+            title={"Linear Search"}
           />
         </div>
       </Grid>
@@ -172,4 +302,6 @@ const Course = (props) => {
 };
 
 // export default Course;
-export default withTranslation("translations")(Course);
+// export default withTranslation("translations")(Course);
+
+export default withTranslation("translations")(connect()(Course));

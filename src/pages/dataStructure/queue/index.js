@@ -18,6 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -47,7 +48,7 @@ const defaultValue = {
   button: null,
 };
 
-const Queue = () => {
+const Queue = (props) => {
   const classes = useStyles();
   const [list, setList] = useState([1, 2, 3, 4, 5]);
   const [inserting, setInserting] = useState(false);
@@ -82,22 +83,12 @@ const Queue = () => {
             display: "flex",
           }}
         >
-          Queue
+          {props.t("queue.queue")}
         </Typography>
       </div>
 
       <Typography className={classes.normalText}>
-        A queue is a linear data structure that stores the elements
-        sequentially. It uses the FIFO approach (First In First Out) for
-        accessing elements. Queues are typically used to manage threads in
-        multithreading and implementing priority queuing systems. In this
-        article, we will learn about different types of queue data structure,
-        basic operations performed on it, implementation, and queue
-        applications. <br />A queue is an important data structure in
-        programming. A queue follows the FIFO (First In First Out) method and is
-        open at both of its ends. Data insertion is done at one end rear end or
-        the tail of the queue while deletion is done at the other end called the
-        front end or the head of the queue.
+        {props.t("queue.text1")} <br /> {props.t("queue.text2")}
       </Typography>
 
       {/* <Grid container xl={12} lg={12} md={12} sm={12} xs={12}> */}
@@ -521,22 +512,18 @@ const Queue = () => {
         ))}
       </Box>
       <Typography style={{ marginTop: 100, fontSize: 20, fontWeight: 600 }}>
-        Real Life example of a queue data structure
+        {props.t("queue.text3")}
       </Typography>
       <Typography style={{ marginTop: 20, fontSize: 18 }}>
-        Let’s consider a line of people waiting to buy a ticket at a cinema
-        hall. A new person will join the line from the end and the person
-        standing at the front will be the first to get the ticket and leave the
-        line. Similarly in a queue data structure, data added first will leave
-        the queue first.
+        {props.t("queue.text4")}
         <br />
         <br />
-        Some other applications of the queue in real-life are:
+        {props.t("queue.text5")}
         <ul>
-          <li>People on an escalator</li>
-          <li>Cashier line in a store</li>
-          <li>A car wash line</li>
-          <li>One way exits</li>
+          <li>{props.t("queue.text6")}</li>
+          <li>{props.t("queue.text7")}</li>
+          <li>{props.t("queue.text8")}</li>
+          <li>{props.t("queue.text9")}</li>
         </ul>
       </Typography>
 
@@ -564,4 +551,4 @@ const Queue = () => {
   );
 };
 
-export default Queue;
+export default withTranslation("translations")(Queue);

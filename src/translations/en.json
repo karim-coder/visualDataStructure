@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "text": "Learn Data Structures and Algorithms",
-    "subText": "Learn online at Your Own Pace with us DSA Course. Master DSA basics and practice Data Structure interview questions with GFG DSA self paced.",
+    "subText": "Learn online at Your Own Pace with us DSA Course. Master DSA basics and practice Data Structure interview questions with VisualDSA self paced.",
     "about": "About",
     "login": "Login",
     "courses": "Courses"
@@ -23,5 +23,46 @@
     "selectionSort": "Selection Sort",
     "mergeSort": "Merge Sort",
     "heapSort": "Heap Sort"
+  },
+
+  "stack": {
+    "stack": "Stack",
+    "text1": "Stack is a linear data structure which follows a particular order in which the operations are performed.",
+    "text2": "LIFO( Last In First Out ):",
+    "text3": "This strategy states that the element that is inserted last will come out first. You can take a pile of plates kept on top of each other as a real-life example. The plate which we put last is on the top and since we remove the plate that is at the top, we can say that the plate that was put last comes out first.",
+    "text4": "The order may be LIFO(Last In First Out) or FILO(First In Last Out). There are many real-life examples of a stack. Consider an example of plates stacked over one another in the canteen. The plate which is at the top is the first one to be removed, i.e. the plate which has been placed at the bottommost position remains in the stack for the longest period of time. So, it can be simply seen to follow LIFO(Last In First Out)/FILO(First In Last Out) order.",
+    "text5": "Basic Operations on Stack",
+    "text6": "In order to make manipulations in a stack, there are certain operations provided to us.",
+    "text7": "push() to insert an element into the stack",
+    "text8": "pop() to remove an element from the stack",
+    "text9": "top() Returns the top element of the stack",
+    "text10": "isEmpty() returns true if stack is empty else false.",
+    "text11": "size() returns the size of stack.",
+    "text12": "Push",
+    "text13": "Adds an item to the stack. If the stack is full, then it is said to be an Overflow condition.",
+    "text14": "Algorithm for push:",
+    "text15": "Pop:",
+    "text16": "Removes an item from the stack. The items are popped in the reversed order in which they are pushed. If the stack is empty, then it is said to be an Underflow condition.",
+    "text17": "Algorithm for pop:",
+    "text18": "Applications of Stack Data Structure",
+    "text19": "Following is the various Applications of Stack in Data Structure:",
+    "text20": "Evaluation of Arithmetic Expressions",
+    "text21": "Backtracking",
+    "text22": "Delimiter Checking",
+    "text23": "Reverse a Data",
+    "text24": "Processing Function Calls"
+  },
+
+  "queue": {
+    "queue": "Queue",
+    "text1": "A queue is a linear data structure that stores the elements sequentially. It uses the FIFO approach (First In First Out) for accessing elements. Queues are typically used to manage threads in multithreading and implementing priority queuing systems. In this article, we will learn about different types of queue data structure, basic operations performed on it, implementation, and queue applications.",
+    "text2": "A queue is an important data structure in programming. A queue follows the FIFO (First In First Out) method and is open at both of its ends. Data insertion is done at one end rear end or the tail of the queue while deletion is done at the other end called the front end or the head of the queue.",
+    "text3": "Real Life example of a queue data structure",
+    "text4": "Let’s consider a line of people waiting to buy a ticket at a cinema hall. A new person will join the line from the end and the person standing at the front will be the first to get the ticket and leave the line. Similarly in a queue data structure, data added first will leave the queue first.",
+    "text5": "Some other applications of the queue in real-life are:",
+    "text6": "People on an escalator",
+    "text7": "Cashier line in a store",
+    "text8": "A car wash line",
+    "text9": "One way exits"
   }
 }

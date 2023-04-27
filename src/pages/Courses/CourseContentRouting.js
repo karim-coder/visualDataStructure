@@ -12,6 +12,8 @@ import InsertionSort from "../dataStructure/insertionSort";
 import SelectionSort from "../dataStructure/selectionSort";
 import MergeSort from "../dataStructure/mergeSort";
 import HeapSort from "../dataStructure/heapSort";
+import BinarySearch from "../dataStructure/binarySearch";
+import LinearSearch from "../dataStructure/linearSearch";
 
 const CourseContentRouting = () => {
   // let location = useLocation();
@@ -116,6 +118,24 @@ const CourseContentRouting = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <HeapSort />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="binary-search"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <BinarySearch />
+          </Suspense>
+        }
+      />
+      <Route
+        exact
+        path="linear-search"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <LinearSearch />
           </Suspense>
         }
       />

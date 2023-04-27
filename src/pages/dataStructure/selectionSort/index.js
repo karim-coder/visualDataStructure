@@ -1,6 +1,9 @@
 import { Box, Slider } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import { Typography, Button, Link, Grid } from "@mui/material";
+
+import TextCode from "../../../components/TextCode";
 
 const marks = [
   {
@@ -125,6 +128,26 @@ const SelectionSort = () => {
       <header>
         <h1>Selection Sort </h1>
       </header>
+      <Typography variant="body1">
+        Selection sort is a simple and efficient sorting algorithm that works by
+        repeatedly selecting the smallest (or largest) element from the unsorted
+        portion of the list and moving it to the sorted portion of the list. The
+        algorithm repeatedly selects the smallest (or largest) element from the
+        unsorted portion of the list and swaps it with the first element of the
+        unsorted portion. This process is repeated for the remaining unsorted
+        portion of the list until the entire list is sorted. One variation of
+        selection sort is called “Bidirectional selection sort” which goes
+        through the list of elements by alternating between the smallest and
+        largest element, this way the algorithm can be faster in some cases.
+        <br />
+        In every iteration of the selection sort, the minimum element
+        (considering ascending order) from the unsorted subarray is picked and
+        moved to the beginning of the sorted subarray. After every iteration
+        sorted subarray size increase by one and the unsorted subarray size
+        decrease by one. After the N (size of the array) iteration, we will get
+        a sorted array.
+        <br />
+      </Typography>
 
       <div className={`array-container ${isSorting ? "move-right" : ""}`}>
         {array.map((value, idx) => {
@@ -204,6 +227,41 @@ const SelectionSort = () => {
           id="animationSpeed"
         />
       </div>
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography
+          style={{
+            fontWeight: 600,
+            marginTop: 10,
+            borderBottom: "2px solid black",
+          }}
+        >
+          Selection Sort Algorithm
+        </Typography>
+      </div>
+
+      <TextCode
+        code={`selectionSort(array, size)
+        repeat (size - 1) times
+        set the first unsorted element as the minimum
+        for each of the unsorted elements
+          if element < currentMinimum
+            set element as new minimum
+        swap minimum with first unsorted position
+      end selectionSort
+       `}
+      />
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "selectionSort" }}
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
     </div>
   );
 };

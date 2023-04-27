@@ -1,4 +1,7 @@
 import { Box, Slider } from "@mui/material";
+import { Typography, Button, Link, Grid } from "@mui/material";
+
+import TextCode from "../../../components/TextCode";
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 
@@ -83,8 +86,37 @@ const InsertionSort = () => {
   return (
     <div>
       <header>
-        <h1>Insertion Sort Animation</h1>
+        <h1>Insertion Sort </h1>
       </header>
+
+      <Typography variant="body1">
+        Insertion sort works similar to the sorting of playing cards in hands.
+        It is assumed that the first card is already sorted in the card game,
+        and then we select an unsorted card. If the selected unsorted card is
+        greater than the first card, it will be placed at the right side;
+        otherwise, it will be placed at the left side. Similarly, all unsorted
+        cards are taken and put in their exact place.
+        <br />
+        The same approach is applied in insertion sort. The idea behind the
+        insertion sort is that first take one element, iterate it through the
+        sorted array. Although it is simple to use, it is not appropriate for
+        large data sets as the time complexity of insertion sort in the average
+        case and worst case is O(n2), where n is the number of items. Insertion
+        sort is less efficient than the other sorting algorithms like heap sort,
+        quick sort, merge sort, etc.
+        <br />
+        The basic idea of Insertion Sort is to divide the array into a sorted
+        part and an unsorted part. The sorted part starts with the first
+        element, and the unsorted part contains all the other elements. The
+        algorithm then takes each element from the unsorted part and inserts it
+        into the correct position in the sorted part. This is done by comparing
+        each element with the elements in the sorted part, starting from the
+        end, and shifting the elements up until the correct position is found.
+        <br />
+        The algorithm repeats this process until the entire array is sorted. The
+        time complexity of insertion sort is O(n^2) in the worst case and O(n)
+        in the best case (when the array is already sorted).
+      </Typography>
 
       <div className="array-container">
         {array.map((value, idx) => (
@@ -158,6 +190,43 @@ const InsertionSort = () => {
           id="animationSpeed"
         />
       </div>
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Typography
+          style={{
+            fontWeight: 600,
+            marginTop: 10,
+            borderBottom: "2px solid black",
+          }}
+        >
+          Pseudo Code of Insertion Sort
+        </Typography>
+      </div>
+
+      <TextCode
+        code={`procedure insertionSort(A: list of sortable items)
+        n = length(A)
+        for i = 1 to n - 1 do
+            j = i
+            while j > 0 and A[j-1] > A[j] do
+                swap(A[j], A[j-1])
+                j = j - 1
+            end while
+        end for
+     end procedure
+       `}
+      />
+
+      <Grid sx={12} style={{ textAlign: "center" }}>
+        <Link
+          to={"/quiz"}
+          state={{ type: "insertionSort" }}
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained" style={{ backgroundColor: "orange" }}>
+            Give a Test
+          </Button>
+        </Link>
+      </Grid>
     </div>
   );
 };
