@@ -530,7 +530,7 @@ const Queue = (props) => {
       <Grid sx={12} style={{ textAlign: "center" }}>
         <Link
           to={"/quiz"}
-          state={{ type: "queue" }}
+          state={{ type: "Queue" }}
           style={{ textDecoration: "none" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>

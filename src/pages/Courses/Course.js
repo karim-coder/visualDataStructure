@@ -159,7 +159,7 @@ const Course = (props) => {
             learned={
               !isEmpty(user) &&
               user?.topicLearned.length > 0 &&
-              user?.topicLearned.toString().includes("linkedList")
+              user?.topicLearned.toString().includes("Linked List")
                 ? true
                 : false
             }
@@ -217,7 +217,7 @@ const Course = (props) => {
             learned={
               !isEmpty(user) &&
               user?.topicLearned.length > 0 &&
-              user?.topicLearned.toString().includes("selectionSort")
+              user?.topicLearned.toString().includes("Selection Sort")
                 ? true
                 : false
             }
@@ -239,7 +239,7 @@ const Course = (props) => {
             learned={
               !isEmpty(user) &&
               user?.topicLearned.length > 0 &&
-              user?.topicLearned.toString().includes("heapSort")
+              user?.topicLearned.toString().includes("Heap Sort")
                 ? true
                 : false
             }
@@ -264,7 +264,7 @@ const Course = (props) => {
             learned={
               !isEmpty(user) &&
               user?.topicLearned.length > 0 &&
-              user?.topicLearned.toString().includes("binarySearch")
+              user?.topicLearned.toString().includes("Binary Search")
                 ? true
                 : false
             }
@@ -275,7 +275,7 @@ const Course = (props) => {
             learned={
               !isEmpty(user) &&
               user?.topicLearned.length > 0 &&
-              user?.topicLearned.toString().includes("linearSearch")
+              user?.topicLearned.toString().includes("Linear Search")
                 ? true
                 : false
             }

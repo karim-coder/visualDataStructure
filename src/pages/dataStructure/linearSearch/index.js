@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
-import { Typography, Button, Link, Grid, TextField } from "@mui/material";
+import { Typography, Button, Grid, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
 import TextCode from "../../../components/TextCode";
 const LinearSearch = () => {
   const [arr, setArr] = useState([]);
@@ -200,7 +201,7 @@ const LinearSearch = () => {
       <Grid sx={12} style={{ textAlign: "center" }}>
         <Link
           to={"/quiz"}
-          state={{ type: "linearSearch" }}
+          state={{ type: "Linear Search" }}
           style={{ textDecoration: "none" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>

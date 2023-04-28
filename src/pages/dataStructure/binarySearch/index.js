@@ -5,7 +5,8 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { TextField, Typography } from "@mui/material";
-import { Button, Link, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import TextCode from "../../../components/TextCode";
 
@@ -296,7 +297,7 @@ const BinarySearch = () => {
       <Grid sx={12} style={{ textAlign: "center" }}>
         <Link
           to={"/quiz"}
-          state={{ type: "binarySearch" }}
+          state={{ type: "Binary Search" }}
           style={{ textDecoration: "none" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>

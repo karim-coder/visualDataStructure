@@ -723,7 +723,7 @@ const LinkedList = () => {
       <Grid sx={12} style={{ textAlign: "center" }}>
         <Link
           to={"/quiz"}
-          state={{ type: "linkedList" }}
+          state={{ type: "Linked List" }}
           style={{ textDecoration: "none" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>

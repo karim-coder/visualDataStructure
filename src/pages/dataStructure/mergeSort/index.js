@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Link, Grid } from "@mui/material";
+import { Typography, Button, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import TextCode from "../../../components/TextCode";
 
@@ -261,7 +262,7 @@ function App() {
       <Grid sx={12} style={{ textAlign: "center" }}>
         <Link
           to={"/quiz"}
-          state={{ type: "mergeSort" }}
+          state={{ type: "Merge Sort" }}
           style={{ textDecoration: "none" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>

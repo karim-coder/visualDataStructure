@@ -629,7 +629,7 @@ end procedure`}
         <Link
           to={"/quiz"}
           style={{ textDecoration: "none" }}
-          state={{ type: "stack" }}
+          state={{ type: "Stack" }}
         >
           <Button variant="contained" style={{ backgroundColor: "orange" }}>
             {props.t("stack.text30")}

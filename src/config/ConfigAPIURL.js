@@ -8,5 +8,8 @@ class ConfigAPIURL {
 
   static createTest = this.baseUrl + "/user/test/create"; // post
   static getAllTest = this.baseUrl + "/user/test/all"; // get
+
+  //Quiz
+  static getQuizBasedOnTopic = this.baseUrl + "/user/quiz/topic"; // post
 }
 export default ConfigAPIURL;
