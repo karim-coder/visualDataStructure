@@ -131,6 +131,9 @@ const Quiz = () => {
         if (res.code === 100) {
           if (res.data.responseCode === 109) {
             setQuestions(res.data.rows);
+            setAnswers(
+              Array.apply(null, Array(res.data.rows.length)).map(function () {})
+            );
           }
         }
       }
@@ -151,7 +154,7 @@ const Quiz = () => {
       if (!isEmpty(res)) {
         if (res.code === 100) {
           if (res.data.responseCode === 109) {
-            navigate("/my-tests");
+            // navigate("/my-tests");
           }
         }
       }
@@ -199,12 +202,19 @@ const Quiz = () => {
               error={error && !answers[index] && answers[index] !== 0}
               variant="standard"
             >
-              <FormLabel id="demo-error-radios">
+              <FormLabel
+                id="demo-error-radios"
+                style={{
+                  color:
+                    showMark && item.answer[0] == answers[index]
+                      ? "green"
+                      : showMark && item.answer[0] != answers[index]
+                      ? "red"
+                      : "black",
+                }}
+              >
                 <span
                   style={{
-                    // padding: "2px 7px",
-                    // background: "#0039C6",
-                    // borderRadius: "50%",
                     marginRight: 5,
                     color: "#0039C6",
                   }}
@@ -223,66 +233,88 @@ const Quiz = () => {
                   setAnswers(arr);
                 }}
               >
-                {item.options.map((answer, index) => (
+                {item.options.map((answer, i) => (
                   <FormControlLabel
                     disabled={showMark}
-                    value={index}
+                    value={i}
                     control={<Radio />}
                     label={answer}
                   />
                   // <div>{answer}</div>
                 ))}
               </RadioGroup>
+              {showMark && item.answer[0] != answers[index] && (
+                <Typography style={{ marginTop: 20 }}>
+                  <span style={{ fontWeight: "bold" }}>Correct Answer</span>:{" "}
+                  {item.options[item.answer[0]]}
+                </Typography>
+              )}
               {error && !answers[index] && answers[index] !== 0 && (
                 <FormHelperText>Please select an option.</FormHelperText>
               )}
-              {/* <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
-          Check Answer
-        </Button> */}
             </FormControl>
           </Grid>
         ))}
+        {showMark ? (
+          <Box style={{ textAlign: "center" }}>
+            <Button
+              sx={{ margin: 2 }}
+              variant="outlined"
+              onClick={() => navigate("/my-tests", { replace: true })}
+            >
+              All Test
+            </Button>
+            <Button
+              sx={{ margin: 2 }}
+              variant="outlined"
+              onClick={() => navigate("/", { replace: true })}
+            >
+              Home
+            </Button>
+          </Box>
+        ) : (
+          <Box style={{ textAlign: "center" }}>
+            <Button
+              sx={{ margin: 2 }}
+              variant="outlined"
+              onClick={() => {
+                let a = false;
+                for (let i = 0; i < answers.length; i++) {
+                  if (!answers[i] && answers[i] !== 0) {
+                    a = true;
+                    setError(true);
 
-        <Box style={{ textAlign: "center" }}>
-          <Button
-            sx={{ margin: 2 }}
-            variant="outlined"
-            onClick={() => {
-              let a = false;
-              for (let i = 0; i < answers.length; i++) {
-                if (!answers[i] && answers[i] !== 0) {
-                  a = true;
-                  setError(true);
-                  break;
-                }
-              }
-
-              if (!a) {
-                let totalMark = 0;
-                questions.map((item, index) => {
-                  if (item.answer[0] === answers[index]) {
-                    totalMark += 1;
+                    break;
                   }
-                });
-                console.log("Total Mark: ", totalMark);
-                setMark(totalMark);
-                setShowMark(true);
-                SubmitQuiz(totalMark);
-              } else {
-                setError(true);
-              }
-            }}
-          >
-            Submit
-          </Button>
-          <Button
-            sx={{ margin: 2 }}
-            variant="outlined"
-            onClick={() => navigate(-1)}
-          >
-            Cancel
-          </Button>
-        </Box>
+                }
+
+                if (!a) {
+                  let totalMark = 0;
+                  questions.map((item, index) => {
+                    if (item.answer[0] === answers[index]) {
+                      totalMark += 1;
+                    }
+                  });
+                  console.log("Total Mark: ", totalMark);
+                  setMark(totalMark);
+                  setShowMark(true);
+                  // SubmitQuiz(totalMark);
+                } else {
+                  setError(true);
+                }
+              }}
+            >
+              Submit
+            </Button>
+            <Button
+              sx={{ margin: 2 }}
+              variant="outlined"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </Button>
+          </Box>
+        )}
       </form>
     </Container>
   );

@@ -99,7 +99,11 @@ const useStyles = makeStyles((theme) => ({
   },
   menuStyle: {
     // color: theme.custom.sideDrawer.menuColor,
-    backgroundColor: "green",
+    backgroundColor: theme.palette.primary.main,
+    // opacity: 0.9,
+    padding: 5,
+    borderRadius: 5,
+    color: "black",
     width: "100%",
     height: "100%",
     color: "white",
@@ -112,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
   nested: {
     // paddingLeft: theme.spacing(9),
-    backgroundColor: "red",
+    // backgroundColor: "blue",
   },
 }));
 
@@ -186,6 +190,7 @@ const Navbar = (props) => {
   const languageChange = (data) => {
     props.i18n.changeLanguage(data.code);
     props.languageChange(data);
+    setMenuStatus({ language: false });
     localStorage.setItem("lng", JSON.stringify(data));
     handleLanguageMenuClose();
   };
@@ -224,6 +229,7 @@ const Navbar = (props) => {
       </Collapse>
     ));
   };
+  console.log("Lang: ", menuStatus);
 
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
@@ -316,7 +322,7 @@ const Navbar = (props) => {
                 }
               >
                 <ListItemIcon>
-                  <TranslateIcon color="white" />
+                  <TranslateIcon style={{ color: "white" }} />
                 </ListItemIcon>
                 <Tooltip title={props.t("topNavBar.language")}>
                   <ListItemText

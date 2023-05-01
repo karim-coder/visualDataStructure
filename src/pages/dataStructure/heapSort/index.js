@@ -121,6 +121,42 @@ const App = () => {
 
     return currentNode;
   };
+
+  const generateSortedLevelBinaryTree = (arr) => {
+    if (arr.length === 0) {
+      return null;
+    }
+
+    const root = { value: arr[0] };
+    const queue = [root];
+
+    let i = 1;
+    while (i < arr.length) {
+      const currentNode = queue.shift();
+
+      // Sort values at current level
+      const values = [arr[i]];
+      if (i + 1 < arr.length) {
+        values.push(arr[i + 1]);
+      }
+      values.sort((a, b) => a - b);
+
+      // Add left child
+      currentNode.leftChild = { value: values[0] };
+      queue.push(currentNode.leftChild);
+      i++;
+
+      // Add right child
+      if (values.length > 1) {
+        currentNode.rightChild = { value: values[1] };
+        queue.push(currentNode.rightChild);
+        i++;
+      }
+    }
+
+    return root;
+  };
+
   const maxHeapify = (arr, n, i) => {
     let smallest = i;
     const left = 2 * i + 1;
@@ -143,8 +179,15 @@ const App = () => {
     generateBinaryTree(arr1, 0);
   };
 
+  const sortArray = (arr) => {
+    const sortedArray = [...arr];
+    sortedArray.sort((a, b) => a - b);
+    return sortedArray;
+  };
+
   const tree = generateBinaryTree(arr1, 0);
   const maxHeapTree = generateBinaryTree(arr, 0);
+  const sortedTree = generateSortedLevelBinaryTree(sortArray([...arr2]));
 
   const handleGenerateArray = () => {
     const newArray = Array.from(
@@ -155,7 +198,8 @@ const App = () => {
     setArr1([...newArray]);
     setArr2([...newArray]);
   };
-  console.log("Tree: ", tree);
+  // console.log("Tree: ", tree);
+  // console.log("Arr: ", arr1);
 
   const renderArray = () => {
     return arr2.map((item, index) => (
@@ -237,6 +281,11 @@ const App = () => {
       <p>Max Heap</p>
       <svg width="700" height="500">
         <Tree x={400} y={50} node={maxHeapTree} />
+      </svg>
+
+      <p>Sorted Tree</p>
+      <svg width="700" height="500">
+        <Tree x={400} y={50} node={sortedTree} />
       </svg>
 
       <div style={{ display: "flex", marginTop: 20 }}>
