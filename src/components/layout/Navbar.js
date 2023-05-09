@@ -286,7 +286,7 @@ const Navbar = (props) => {
       <AppBar position="static">
         <Container maxWidth="xxl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
             <Box sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}>
               <Link
                 to="/"
@@ -299,7 +299,7 @@ const Navbar = (props) => {
                   fontSize: 15,
                 }}
               >
-                Logo
+                VisualDSA
               </Link>
             </Box>
 

@@ -50,7 +50,13 @@
     "text21": "Backtracking",
     "text22": "Delimiter Checking",
     "text23": "Reverse a Data",
-    "text24": "Processing Function Calls"
+    "text24": "Processing Function Calls",
+    "text25": "Clear",
+    "text26": "Pop",
+    "text27": "Push",
+    "text28": "Popped Value",
+    "text29": "Top",
+    "text30": "Give test"
   },
 
   "queue": {

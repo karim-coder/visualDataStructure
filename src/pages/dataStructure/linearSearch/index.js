@@ -102,7 +102,7 @@ const LinearSearch = () => {
             <TextField
               type="number"
               placeholder="Enter value to search"
-              value={searchTerm}
+              value={searchTerm ? searchTerm : ""}
               onChange={handleSearchChange}
             />
           </div>
@@ -118,10 +118,10 @@ const LinearSearch = () => {
                   // marginRight: (index === currentIndex) !== "#ffffff" ? 10 : 5,
                   // marginLeft: (index === currentIndex) !== "#ffffff" ? 10 : 0,
                   textAlign: "center",
-                  clipPath:
-                    currentIndex !== null &&
-                    index <= currentIndex &&
-                    "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+                  // clipPath:
+                  //   currentIndex !== null &&
+                  //   index <= currentIndex &&
+                  //   "polygon(50% 0%, 50% 40%, 70% 40%, 70% 60%, 50% 60%, 50% 100%, 30% 100%, 30% 60%, 10% 60%, 10% 40%, 30% 40%, 30% 0%)",
                   // lineHeight: "50px",
                   borderRadius: index === currentIndex ? "50%" : "5px",
                   border: "1px solid #cccccc",
@@ -143,7 +143,7 @@ const LinearSearch = () => {
                     currentIndex === foundIndex && index == foundIndex
                       ? "green"
                       : currentIndex !== null && index <= currentIndex
-                      ? "black"
+                      ? "blue"
                       : "white",
                 }}
               >
