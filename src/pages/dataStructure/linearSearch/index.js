@@ -118,6 +118,10 @@ const LinearSearch = () => {
                   // marginRight: (index === currentIndex) !== "#ffffff" ? 10 : 5,
                   // marginLeft: (index === currentIndex) !== "#ffffff" ? 10 : 0,
                   textAlign: "center",
+                  clipPath:
+                    currentIndex !== null &&
+                    index <= currentIndex &&
+                    "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
                   // lineHeight: "50px",
                   borderRadius: index === currentIndex ? "50%" : "5px",
                   border: "1px solid #cccccc",
@@ -138,7 +142,7 @@ const LinearSearch = () => {
                   backgroundColor:
                     currentIndex === foundIndex && index == foundIndex
                       ? "green"
-                      : currentIndex && index <= currentIndex
+                      : currentIndex !== null && index <= currentIndex
                       ? "black"
                       : "white",
                 }}

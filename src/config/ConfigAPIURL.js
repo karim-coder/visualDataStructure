@@ -5,6 +5,7 @@ class ConfigAPIURL {
   static login = this.baseUrl + "/user/login";
   static sessionValidation = this.baseUrl + "/user/islogin"; // get
   static logout = this.baseUrl + "/user/logout"; // get
+  static profile = this.baseUrl + "/user/profile"; // get
 
   static createTest = this.baseUrl + "/user/test/create"; // post
   static getAllTest = this.baseUrl + "/user/test/all"; // get

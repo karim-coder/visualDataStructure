@@ -298,7 +298,7 @@ const Quiz = () => {
                   console.log("Total Mark: ", totalMark);
                   setMark(totalMark);
                   setShowMark(true);
-                  // SubmitQuiz(totalMark);
+                  SubmitQuiz(totalMark);
                 } else {
                   setError(true);
                 }

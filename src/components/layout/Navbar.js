@@ -149,7 +149,7 @@ const Navbar = (props) => {
   };
   const handleOpenUserMenu = (event) => {
     // setAnchorElUser(event.currentTarget);
-    navigate("/course");
+    navigate("/course/stack");
   };
 
   const handleCloseNavMenu = () => {

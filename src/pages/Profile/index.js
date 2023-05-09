@@ -1,148 +1,134 @@
-import React, { useState } from "react";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
-const LinearSearch = () => {
-  const [arr, setArr] = useState([]);
+import React from "react";
+import {
+  Container,
+  Box,
+  Grid,
+  Avatar,
+  Typography,
+  Divider,
+  Card,
+  CardContent,
+  Stack,
+} from "@mui/material";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TodayIcon from "@mui/icons-material/Today";
+import GradingIcon from "@mui/icons-material/Grading";
+import GradeIcon from "@mui/icons-material/Grade";
+import APIRequest from "../../utils/APIRequest";
+import ConfigAPIURL from "../../config/ConfigAPIURL";
+import isEmpty from "../../utils/isEmpty";
+import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-  const [currentIndex, setCurrentIndex] = useState(-1);
+function UserProfile() {
+  const [profile, setProfile] = React.useState([]);
+  React.useEffect(() => {
+    getProfile();
+  }, []);
 
-  const [searchTerm, setSearchTerm] = useState(null);
-  const [foundIndex, setFoundIndex] = useState(null);
-
-  const generateArray = () => {
-    const array = [];
-    for (let i = 0; i < 10; i++) {
-      array.push(Math.floor(Math.random() * 10) + 1);
-    }
-    setArr(array);
-    setCurrentIndex(null);
-    setSearchTerm(null);
-    setFoundIndex(null);
-  };
-
-  const linearSearch = () => {
-    let n = arr.length;
-    let tempArr = [...arr];
-    setCurrentIndex(0);
-    if (arr[0] === searchTerm) {
-      setFoundIndex(0);
-      return;
-    } else {
-      for (let i = 1; i < n; i++) {
-        setTimeout(() => {
-          setCurrentIndex(i);
-
-          if (n - 1 === i) {
-            console.log("HI");
-            setTimeout(() => {
-              setCurrentIndex(null);
-              setFoundIndex(-1);
-            }, 500);
-            return;
+  const getProfile = () => {
+    APIRequest.request("GET", ConfigAPIURL.profile, "").then((res) => {
+      if (!isEmpty(res)) {
+        if (res.code === 100) {
+          if (res.data.responseCode === 109) {
+            setProfile(res.data.result);
           }
-        }, i * 500);
-        if (arr[i] === searchTerm) {
-          setFoundIndex(i);
-          return;
         }
       }
-    }
-
-    // setTimeout(() => {
-    //   setCurrentIndex(-1);
-    // }, n * 1000);
+    });
   };
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(parseInt(event.target.value));
-    setCurrentIndex(null);
-    setFoundIndex(null);
-  };
+  const user = useSelector((store) => store.user);
 
-  console.log("CurrentIndex: ", currentIndex);
-  console.log("Found: ", foundIndex);
+  const formatDate = (unixTimestamp) => {
+    const date = new Date(unixTimestamp * 1000);
+    const options = { month: "short", day: "2-digit", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h2>Insertion Sort with Animation</h2>
-      <div style={{ marginBottom: "20px" }}>
-        <button onClick={generateArray}>Generate Array</button>
-      </div>
-      <div>
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="number"
-            placeholder="Enter value to search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        </div>
-        {/* <p className="search-value">{searchTerm}</p> */}
-        <div style={{ marginTop: 50 }}>
-          {arr.map((value, index) => (
-            <div
-              key={index}
-              style={{
-                display: "inline-block",
-                margin: "5px",
-                border: "1px solid black",
+    <Container maxWidth="md">
+      <Box sx={{ mb: 5 }}>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Avatar
+              alt="User Profile Picture"
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              sx={{ width: 120, height: 120 }}
+            />
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography variant="h4" gutterBottom fontFamily="Roboto">
+                  {user.fname} {user.lname}
+                </Typography>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <PhoneIcon />
+                  <Typography variant="body1" gutterBottom fontFamily="Roboto">
+                    123-456-7890
+                    {/* {user.mobileNo.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")} */}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <EmailIcon />
+                  <Typography variant="body1" fontFamily="Roboto">
+                    {user.email}
+                  </Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+      <Box sx={{ mb: 5 }}>
+        <Divider />
+      </Box>
 
-                position: "relative",
-                ease: "easeOut",
-                padding: index === currentIndex ? "15px 20px" : "10px 15px ",
-                transition: "1s",
-                color:
-                  index === currentIndex ||
-                  (currentIndex && index <= currentIndex)
-                    ? "white"
-                    : "black",
-                backgroundColor:
-                  currentIndex &&
-                  // currentIndex >= index &&
-                  currentIndex === foundIndex &&
-                  index == foundIndex
-                    ? "green"
-                    : currentIndex && index <= currentIndex
-                    ? "black"
-                    : "white",
-              }}
-            >
-              {currentIndex === index && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: -30,
-                    left: 12,
-                    color: searchTerm === arr[currentIndex] ? "green" : "red",
-                    ease: "easeOut",
-                    transition: "1s",
-                  }}
-                >
-                  {searchTerm === arr[currentIndex] ? (
-                    <DoneIcon style={{ color: "green" }} />
-                  ) : (
-                    <CloseIcon style={{ color: "red" }} />
-                  )}
-                </span>
-              )}
-              {value}
-            </div>
-          ))}
-        </div>
-        {foundIndex == -1 ? (
-          <p>Not found.</p>
-        ) : (
-          foundIndex > 0 &&
-          currentIndex === foundIndex && (
-            <p>Found it at position {foundIndex + 1}.</p>
-          )
-        )}
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={linearSearch}>Search</button>
-      </div>
-    </div>
+      <Grid item xs={12} sm={6}>
+        <Card sx={{ minWidth: 275, mb: 2 }}>
+          <CardContent>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Passed Tests
+            </Typography>
+
+            <Box>
+              {profile.length > 0 &&
+                profile.map((item) => (
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <CheckCircleIcon sx={{ mr: 1, color: "green" }} />
+                    <Typography
+                      variant="body1"
+                      sx={{ textTransform: "capitalize" }}
+                    >
+                      {item._id}
+                    </Typography>
+                    <Box
+                      sx={{ ml: "auto", display: "flex", alignItems: "center" }}
+                    >
+                      <TodayIcon sx={{ mr: 0.5 }} fontSize="small" />
+                      <Typography variant="body2" style={{ width: 110 }}>
+                        {formatDate(item.createdAt)}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ ml: 2, display: "flex", alignItems: "center" }}>
+                      <GradeIcon sx={{ mr: 0.5 }} fontSize="small" />
+                      <Typography variant="body2">
+                        {(item.marksObtained / item.totalMark) * 100}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Container>
   );
-};
+}
 
-export default LinearSearch;
+export default connect()(UserProfile);
