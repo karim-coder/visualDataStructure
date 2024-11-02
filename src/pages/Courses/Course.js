@@ -136,6 +136,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("stack")
                 ? true
@@ -147,6 +148,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("queue")
                 ? true
@@ -158,6 +160,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("Linked List")
                 ? true
@@ -169,6 +172,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("hashTable")
                 ? true
@@ -194,6 +198,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("bubbleSort")
                 ? true
@@ -205,6 +210,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("insertionSort")
                 ? true
@@ -216,6 +222,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("Selection Sort")
                 ? true
@@ -227,6 +234,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("mergeSort")
                 ? true
@@ -238,6 +246,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("Heap Sort")
                 ? true
@@ -263,6 +272,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("Binary Search")
                 ? true
@@ -274,6 +284,7 @@ const Course = (props) => {
           <Links
             learned={
               !isEmpty(user) &&
+              user?.topicLearned &&
               user?.topicLearned.length > 0 &&
               user?.topicLearned.toString().includes("Linear Search")
                 ? true

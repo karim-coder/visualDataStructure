@@ -2,263 +2,276 @@ import { Box, Slider } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { Typography, Button, Link, Grid } from "@mui/material";
-
 import TextCode from "../../../components/TextCode";
 
+// Add this to your styles.css
+const styleContent = `
+.array-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 400px;
+  margin: 20px;
+}
+
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2px;
+  transition: transform 0.5s ease;
+}
+
+.array-bar {
+  width: 30px;
+  margin: 0 2px;
+  transition: all 0.3s ease;
+  border-radius: 2px 2px 0 0;
+}
+
+.array-bar.comparing {
+  background-color: #FFD700 !important;
+  animation: pulse 0.5s ease infinite alternate;
+}
+
+.array-bar.minimum {
+  background-color: #FF4444 !important;
+}
+
+.array-bar.sorted {
+  background-color: #4CAF50 !important;
+}
+
+.array-bar.swapping {
+  animation: swapPulse 0.5s ease;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes swapPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bar-value {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+`;
+
 const marks = [
-  {
-    value: 250,
-    label: "0.25s",
-  },
-  {
-    value: 500,
-    label: "0.5s",
-  },
-  {
-    value: 1000,
-    label: "1s",
-  },
-  {
-    value: 1500,
-    label: "1.5s",
-  },
+  { value: 250, label: "0.25s" },
+  { value: 500, label: "0.5s" },
+  { value: 1000, label: "1s" },
+  { value: 1500, label: "1.5s" },
 ];
-
-function valuetext(value) {
-  return `${value}°C`;
-}
-
-function valueLabelFormat(value) {
-  return marks.findIndex((mark) => mark.value === value) + 1;
-}
 
 const SelectionSort = () => {
   const [array, setArray] = useState([]);
   const [animationSpeed, setAnimationSpeed] = useState(1000);
-  const [index, setIndex] = useState(null);
-  const [index1, setIndex1] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [comparingIndex, setComparingIndex] = useState(null);
+  const [minIndex, setMinIndex] = useState(null);
+  const [sortedIndices, setSortedIndices] = useState(new Set());
   const [isSorting, setIsSorting] = useState(false);
+  const [swappingIndices, setSwappingIndices] = useState([]);
 
   useEffect(() => {
     generateArray();
+    const style = document.createElement("style");
+    style.textContent = styleContent;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
   }, []);
 
   const generateArray = () => {
-    const newArray = [];
-    for (let i = 0; i < 20; i++) {
-      newArray.push(Math.floor(Math.random() * 350) + 1);
-    }
+    const newArray = Array.from(
+      { length: 20 },
+      () => Math.floor(Math.random() * 300) + 50
+    );
     setArray(newArray);
+    setSortedIndices(new Set());
+    setCurrentIndex(null);
+    setComparingIndex(null);
+    setMinIndex(null);
+    setSwappingIndices([]);
   };
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const selectionSort = async () => {
     setIsSorting(true);
-    for (let i = 0; i < array.length - 1; i++) {
-      let minIdx = i;
+    const n = array.length;
+    const newArray = [...array];
 
-      for (let j = i + 1; j < array.length; j++) {
-        // await new Promise((resolve) => setTimeout(resolve, animationSpeed));
-        //  setIndex(j);
-        if (array[j] < array[minIdx]) {
+    for (let i = 0; i < n - 1; i++) {
+      setCurrentIndex(i);
+      let minIdx = i;
+      setMinIndex(minIdx);
+
+      // Finding the minimum element
+      for (let j = i + 1; j < n; j++) {
+        setComparingIndex(j);
+        await sleep(animationSpeed / 2);
+
+        if (newArray[j] < newArray[minIdx]) {
           minIdx = j;
+          setMinIndex(minIdx);
         }
       }
-      setIndex(minIdx);
-      setIndex1(i);
-      await new Promise((resolve) => setTimeout(resolve, animationSpeed));
 
-      let temp = array[i];
-      array[i] = array[minIdx];
-      array[minIdx] = temp;
-      setArray([...array]);
+      // Swapping
+      if (minIdx !== i) {
+        setSwappingIndices([i, minIdx]);
+        await sleep(animationSpeed / 2);
+
+        // Perform the actual swap
+        const temp = newArray[i];
+        newArray[i] = newArray[minIdx];
+        newArray[minIdx] = temp;
+
+        setArray([...newArray]);
+        await sleep(animationSpeed / 2);
+        setSwappingIndices([]);
+      }
+
+      setSortedIndices((prev) => new Set([...prev, i]));
+      setComparingIndex(null);
     }
+
+    // Mark the last element as sorted
+    setSortedIndices((prev) => new Set([...prev, n - 1]));
+
+    // Reset states
+    setCurrentIndex(null);
+    setComparingIndex(null);
+    setMinIndex(null);
     setIsSorting(false);
-    setIndex(null);
-    // setIndex1(null);
   };
-  console.log(array[index1], array[index]);
-  console.log(index1, index);
-  let styleSheet = document.styleSheets[0];
-  let keyframes = `
-    @-webkit-keyframes left1 {
-     
-        0% {
-          right: 0px;
-          top: 0px;
-        }
-        100% {
-          right:  ${(index - index1) * 35}px;
-          top: 0px;
-        }
-      
-     
-    }
-    
-  `;
 
-  styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-  let right1 = `
-    @-webkit-keyframes right1 {
-
-        0% {
-          /* background: red; */
-          left: 0px;
-          top: 0px;
-        }
-        100% {
-          /* background: yellow; */
-          left: 35px;
-          top: 0px;
-        }
-
-    }`;
-  styleSheet.insertRule(right1, styleSheet.cssRules.length);
-
-  let moveRight = `
-  @keyframes move-right {
-    0% { transform: translateX(0px); }
-    100% { transform: translateX(${(index - index1) * 35}px); }
-  }
-`;
-
-  styleSheet.insertRule(moveRight, styleSheet.cssRules.length);
+  const getBarColor = (index) => {
+    if (sortedIndices.has(index)) return "#4CAF50"; // Sorted
+    if (index === minIndex) return "#FF4444"; // Current minimum
+    if (index === comparingIndex) return "#FFD700"; // Being compared
+    if (index === currentIndex) return "#2196F3"; // Current position
+    return "#333"; // Default
+  };
 
   return (
     <div>
       <header>
-        <h1>Selection Sort </h1>
+        <h1>Selection Sort</h1>
       </header>
-      <Typography variant="body1">
+
+      <Typography variant="body1" style={{ margin: "20px 0" }}>
         Selection sort is a simple and efficient sorting algorithm that works by
-        repeatedly selecting the smallest (or largest) element from the unsorted
-        portion of the list and moving it to the sorted portion of the list. The
-        algorithm repeatedly selects the smallest (or largest) element from the
-        unsorted portion of the list and swaps it with the first element of the
-        unsorted portion. This process is repeated for the remaining unsorted
-        portion of the list until the entire list is sorted. One variation of
-        selection sort is called “Bidirectional selection sort” which goes
-        through the list of elements by alternating between the smallest and
-        largest element, this way the algorithm can be faster in some cases.
-        <br />
-        In every iteration of the selection sort, the minimum element
-        (considering ascending order) from the unsorted subarray is picked and
-        moved to the beginning of the sorted subarray. After every iteration
-        sorted subarray size increase by one and the unsorted subarray size
-        decrease by one. After the N (size of the array) iteration, we will get
-        a sorted array.
-        <br />
+        repeatedly selecting the smallest element from the unsorted portion of
+        the list and moving it to the sorted portion of the list.
       </Typography>
 
-      <div className={`array-container ${isSorting ? "move-right" : ""}`}>
-        {array.map((value, idx) => {
-          if (isSorting && idx === index) {
-          } else if (isSorting && idx + 1 > index1 && idx + 1 < index) {
-            console.log("HI", idx, index1, index);
-          }
-          return (
-            <div>
-              <div
-                className="array-bar"
-                key={idx}
-                style={{
-                  height: `${value}px`,
-                  backgroundColor:
-                    idx === index ? "red" : idx < index1 ? "green" : "black",
-                  // animationName: idx === index ? "left" : "",
-                  animation:
-                    isSorting &&
-                    idx === index &&
-                    `left1 ${animationSpeed / 1000}s`,
-                  // : isSorting &&
-                  //   idx + 1 > index1 &&
-                  //   idx + 1 < index &&
-                  //   `right1 ${animationSpeed / 1000}s`,,
-                  position: "relative",
-                  // idx === index ? "right" : idx === index - 1 ? "left" : "",
-                  ease: "easeOut",
-                  // animationDuration: "1s",
-
-                  // animationIterationCount: 1,
-                  // animationDirection: "normal",
-                  // animationFillMode: "forwards",
-                }}
-              ></div>
-              <p
-                style={{
-                  animation:
-                    isSorting &&
-                    idx === index &&
-                    `left1 ${animationSpeed / 1000}s`,
-                  position: "relative",
-                  // idx === index ? "right" : idx === index - 1 ? "left" : "",
-                  ease: "easeOut",
-                  textAlign: "center",
-                }}
-              >
-                {value}
-              </p>
-            </div>
-          );
-        })}
+      <div className="array-container">
+        {array.map((value, idx) => (
+          <div key={idx} className="bar-wrapper">
+            <div
+              className={`array-bar 
+                ${idx === comparingIndex ? "comparing" : ""}
+                ${idx === minIndex ? "minimum" : ""}
+                ${sortedIndices.has(idx) ? "sorted" : ""}
+                ${swappingIndices.includes(idx) ? "swapping" : ""}
+              `}
+              style={{
+                height: `${value}px`,
+                backgroundColor: getBarColor(idx),
+              }}
+            />
+            <div className="bar-value">{value}</div>
+          </div>
+        ))}
       </div>
-      <div className="button-container">
-        <button onClick={generateArray}>Generate New Array</button>
-        <button onClick={selectionSort}>Selection Sort</button>
-        <label htmlFor="animationSpeed">Animation Speed:</label>
-        <Box sx={{ width: 300 }}>
+
+      <div className="controls" style={{ margin: "20px", textAlign: "center" }}>
+        <Button
+          variant="contained"
+          onClick={generateArray}
+          disabled={isSorting}
+          style={{ margin: "0 10px" }}
+        >
+          Generate New Array
+        </Button>
+        <Button
+          variant="contained"
+          onClick={selectionSort}
+          disabled={isSorting}
+          style={{ margin: "0 10px" }}
+        >
+          Start Sorting
+        </Button>
+
+        <Box sx={{ width: 300, margin: "20px auto" }}>
+          <Typography gutterBottom>Animation Speed</Typography>
           <Slider
-            aria-label="Restricted values"
-            // defaultValue={1000}
+            value={animationSpeed}
+            min={100}
             max={1500}
-            valueLabelFormat={valueLabelFormat}
-            getAriaValueText={valuetext}
-            onChange={(e) => setAnimationSpeed(e.target.value)}
-            step={null}
-            valueLabelDisplay="auto"
             marks={marks}
+            step={null}
+            disabled={isSorting}
+            onChange={(_, value) => setAnimationSpeed(value)}
           />
         </Box>
-        <input
-          type="range"
-          min="1"
-          max="1000"
-          value={animationSpeed}
-          onChange={(e) => setAnimationSpeed(e.target.value)}
-          id="animationSpeed"
-        />
       </div>
-      <div style={{ display: "flex", marginTop: 20 }}>
-        <Typography
-          style={{
-            fontWeight: 600,
-            marginTop: 10,
-            borderBottom: "2px solid black",
-          }}
-        >
-          Selection Sort Algorithm
+
+      <div style={{ margin: "20px 0" }}>
+        <Typography variant="h6" gutterBottom>
+          Color Legend:
         </Typography>
+        <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+          <div>🟦 Current Position</div>
+          <div>🟨 Comparing</div>
+          <div>🟥 Current Minimum</div>
+          <div>🟩 Sorted</div>
+        </div>
       </div>
 
       <TextCode
         code={`selectionSort(array, size)
-        repeat (size - 1) times
-        set the first unsorted element as the minimum
-        for each of the unsorted elements
-          if element < currentMinimum
-            set element as new minimum
-        swap minimum with first unsorted position
-      end selectionSort
-       `}
+  repeat (size - 1) times
+    set the first unsorted element as the minimum
+    for each of the unsorted elements
+      if element < currentMinimum
+        set element as new minimum
+    swap minimum with first unsorted position
+  end selectionSort`}
       />
 
-      <Grid sx={12} style={{ textAlign: "center" }}>
+      <Grid sx={12} style={{ textAlign: "center", margin: "20px 0" }}>
         <Link
           to={"/quiz"}
           state={{ type: "selectionSort" }}
           style={{ textDecoration: "none" }}
         >
-          <Button variant="contained" style={{ backgroundColor: "orange" }}>
-            Give a Test
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "orange" }}
+            disabled={isSorting}
+          >
+            Take Quiz
           </Button>
         </Link>
       </Grid>

@@ -97,7 +97,8 @@ function UserProfile() {
             </Typography>
 
             <Box>
-              {profile.length > 0 &&
+              {profile &&
+                profile.length > 0 &&
                 profile.map((item) => (
                   <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                     <CheckCircleIcon sx={{ mr: 1, color: "green" }} />
