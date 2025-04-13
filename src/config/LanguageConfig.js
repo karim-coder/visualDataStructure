@@ -1,6 +1,8 @@
 import en from "../translations/en.json";
 import fa from "../translations/fa.json";
 import pa from "../translations/pa.json";
+import hi from "../translations/hi.json"; // Changed import alias from `in` to `hi`
+
 const LanguageConfig = {
   languageList: async function () {
     let languageList = [
@@ -9,14 +11,19 @@ const LanguageConfig = {
         code: "en",
       },
       {
-        displayName: "Dari",
+        displayName: "हिन्दी", // Hindi in Hindi
+        code: "hi",
+      },
+      {
+        displayName: "دری", // Dari in Dari
         code: "fa",
       },
       {
-        displayName: "Pashto",
+        displayName: "پښتو", // Pashto in Pashto
         code: "pa",
       },
     ];
+
     return languageList;
   },
   I18ConfigResources: function () {
@@ -30,8 +37,12 @@ const LanguageConfig = {
       pa: {
         translations: pa,
       },
+      hi: {
+        translations: hi, // Use the new alias
+      },
     };
     return resources;
   },
 };
+
 export default LanguageConfig;

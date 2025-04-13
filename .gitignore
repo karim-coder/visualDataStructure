@@ -2,22 +2,58 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# testing
+/coverage
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# editor directories and files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# macOS specific
+*.DS_Store
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+
+# Parcel cache
+.cache/
+
+# next.js or other frameworks (if switching)
+.next/
+out/
+
+# typescript
+*.tsbuildinfo
+
+# optional: ignore local development database or storage
+*.sqlite
+*.sqlite3
+*.log
+
+# eslint cache
+.eslintcache
+
+# optional: if using firebase/emulators
+.firebase/
+.firebaserc
